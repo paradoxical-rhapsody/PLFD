@@ -4,7 +4,7 @@ Title: A Portmanteau Local Feature Discrimination Approach to the High-Dimension
 Version: 0.9
 Date: 2019-11-11
 Author: Zengchao XU, Shan Luo, Zehua Chen
-Maintainer: Zengchao XU <zengc.xu@gmail.com>
+Maintainer: Zengchao XU <xuzengchao@sjtu.edu.cn>
 Description: Identify the local features that are significant to classification and employ them
     to form sub-discriminant functions, then aggregate the subfunctions for classification.
 License: GPL-3

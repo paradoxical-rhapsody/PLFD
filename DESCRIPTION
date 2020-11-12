@@ -1,0 +1,16 @@
+Package: PLFD
+Type: Package
+Title: A Portmanteau Local Feature Discrimination Approach to the High-Dimensional Matrix-Variate Data
+Version: 0.9
+Date: 2019-11-11
+Author: Zengchao XU, Shan Luo, Zehua Chen
+Maintainer: Zengchao XU <zengc.xu@gmail.com>
+Description: Identify the local features that are significant to classification and employ them
+    to form sub-discriminant functions, then aggregate the subfunctions for classification.
+License: GPL-3
+Depends: R (>= 3.5.0)
+Imports: Rcpp (>= 1.0.2)
+LinkingTo: Rcpp (>= 1.0.2), RcppArmadillo (>= 0.9.800)
+Roxygen: list(load = "source")
+Encoding: UTF-8
+RoxygenNote: 7.1.0

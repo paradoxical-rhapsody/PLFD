@@ -1,8 +1,8 @@
 ---
-title: "Examle"
+title: "Example"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Examle}
+  %\VignetteIndexEntry{Example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -40,7 +40,9 @@ yTest <- c(rep(1, n1Test), rep(2, n2Test))
 
 r0 <- c0 <- 5
 system.time(plfd.model <- plfd(x1=x2, x2=x2, r0=r0, c0=c0, xtest=xTest, ytest=yTest))
-summary(plfd.model)
+print(plfd.model)
+
+predict(plfd.model, xTest)
 ```
 
 The target environment is listed below.

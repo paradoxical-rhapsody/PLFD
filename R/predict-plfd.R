@@ -6,7 +6,6 @@
 #' 
 #' @return Matrix with two columns, including the scores and predicted groups.
 #' 
-#' @noRd
 #' @export 
 predict.plfd <- function(object, x, ...) {
     stopifnot(object$rDim == NROW(x))

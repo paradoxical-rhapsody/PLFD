@@ -16,3 +16,7 @@ Language: en-US
 Roxygen: list(load="source", markdown=TRUE)
 Encoding: UTF-8
 RoxygenNote: 7.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

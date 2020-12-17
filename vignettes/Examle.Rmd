@@ -1,0 +1,51 @@
+---
+title: "Examle"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Examle}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+For ease of use, the `PLFD` has been complied on win10-platform. The target environment is `R-3.6`. 
+
+This example applies the `PLFD` to the first set of settings in the original paper. 
+
+```{r setup}
+rm(list=ls())
+set.seed(2020)
+library(PLFD)
+
+n1 <- n2 <- 75
+rDim <- cDim <- 60
+n1Test <- n2Test <- 1000
+
+M1 <- matrix(0.0, rDim, cDim)
+M1[1:10, 1:10] <- matrix(runif(10, 0.2, 0.8)*rbinom(10, 1, 0.5), 10, 10)
+
+x1 <- sweep(array(rnorm(rDim*cDim*n1), c(rDim, cDim, n1)), 1:2, M1, '+')
+x2 <- array(rnorm(rDim*cDim*n2), c(rDim, cDim, n2))
+
+x1Test <- sweep(array(rnorm(rDim*cDim*n1Test), c(rDim, cDim, n1Test)), 1:2, M1, '+')
+x2Test <- array(rnorm(rDim*cDim*n2Test), c(rDim, cDim, n2Test))
+
+xTest <- c(x1Test, x2Test)
+dim(xTest) <- c(rDim, cDim, n1Test+n2Test)
+yTest <- c(rep(1, n1Test), rep(2, n2Test))
+
+r0 <- c0 <- 5
+system.time(plfd.model <- plfd(x1=x2, x2=x2, r0=r0, c0=c0, xtest=xTest, ytest=yTest))
+summary(plfd.model)
+```
+
+```{r sessionInfo}
+sessionInfo()
+```

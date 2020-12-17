@@ -6,29 +6,55 @@
 
 using namespace Rcpp;
 
-// cxx_matNormal_lik
-double cxx_matNormal_lik(const arma::cube& x, const arma::mat& Psi, const arma::mat& Sig);
-RcppExport SEXP _PLFD_cxx_matNormal_lik(SEXP xSEXP, SEXP PsiSEXP, SEXP SigSEXP) {
+// cxx_matNormal_logLik
+double cxx_matNormal_logLik(const arma::cube& x, const arma::mat& Psi, const arma::mat& Sig);
+RcppExport SEXP _PLFD_cxx_matNormal_logLik(SEXP xSEXP, SEXP PsiSEXP, SEXP SigSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::cube& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type Sig(SigSEXP);
-    rcpp_result_gen = Rcpp::wrap(cxx_matNormal_lik(x, Psi, Sig));
+    rcpp_result_gen = Rcpp::wrap(cxx_matNormal_logLik(x, Psi, Sig));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cxx_matNormal_mle
+List cxx_matNormal_mle(const arma::cube& x, unsigned int maxIter, double tol);
+RcppExport SEXP _PLFD_cxx_matNormal_mle(SEXP xSEXP, SEXP maxIterSEXP, SEXP tolSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::cube& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type maxIter(maxIterSEXP);
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    rcpp_result_gen = Rcpp::wrap(cxx_matNormal_mle(x, maxIter, tol));
     return rcpp_result_gen;
 END_RCPP
 }
 // cxx_mean
-arma::cube cxx_mean(arma::cube x1, arma::cube x2, LogicalMatrix flag);
+arma::cube cxx_mean(const arma::cube& x1, const arma::cube& x2, const LogicalMatrix& flag);
 RcppExport SEXP _PLFD_cxx_mean(SEXP x1SEXP, SEXP x2SEXP, SEXP flagSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::cube >::type x1(x1SEXP);
-    Rcpp::traits::input_parameter< arma::cube >::type x2(x2SEXP);
-    Rcpp::traits::input_parameter< LogicalMatrix >::type flag(flagSEXP);
+    Rcpp::traits::input_parameter< const arma::cube& >::type x1(x1SEXP);
+    Rcpp::traits::input_parameter< const arma::cube& >::type x2(x2SEXP);
+    Rcpp::traits::input_parameter< const LogicalMatrix& >::type flag(flagSEXP);
     rcpp_result_gen = Rcpp::wrap(cxx_mean(x1, x2, flag));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cxx_centralize_samples
+arma::cube cxx_centralize_samples(const arma::cube& x1, const arma::cube& x2, const LogicalMatrix& flag);
+RcppExport SEXP _PLFD_cxx_centralize_samples(SEXP x1SEXP, SEXP x2SEXP, SEXP flagSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::cube& >::type x1(x1SEXP);
+    Rcpp::traits::input_parameter< const arma::cube& >::type x2(x2SEXP);
+    Rcpp::traits::input_parameter< const LogicalMatrix& >::type flag(flagSEXP);
+    rcpp_result_gen = Rcpp::wrap(cxx_centralize_samples(x1, x2, flag));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -47,8 +73,10 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_PLFD_cxx_matNormal_lik", (DL_FUNC) &_PLFD_cxx_matNormal_lik, 3},
+    {"_PLFD_cxx_matNormal_logLik", (DL_FUNC) &_PLFD_cxx_matNormal_logLik, 3},
+    {"_PLFD_cxx_matNormal_mle", (DL_FUNC) &_PLFD_cxx_matNormal_mle, 3},
     {"_PLFD_cxx_mean", (DL_FUNC) &_PLFD_cxx_mean, 3},
+    {"_PLFD_cxx_centralize_samples", (DL_FUNC) &_PLFD_cxx_centralize_samples, 3},
     {"_PLFD_cxx_prec", (DL_FUNC) &_PLFD_cxx_prec, 3},
     {NULL, NULL, 0}
 };

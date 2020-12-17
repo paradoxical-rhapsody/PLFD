@@ -10,9 +10,10 @@ using namespace Rcpp;
 //' @param Psi Row convariance matrix.
 //' @param Sig Column covariance matrix.
 //'
+//' @return Log-likelihood value.
 //' @noRd
 // [[Rcpp::export]]
-double cxx_matNormal_lik (const arma::cube& x, const arma::mat& Psi, const arma::mat& Sig) {
+double cxx_matNormal_logLik (const arma::cube& x, const arma::mat& Psi, const arma::mat& Sig) {
 	unsigned int r0 = x.n_rows ;
 	unsigned int c0 = x.n_cols ;
 	unsigned int n0 = x.n_slices ;
@@ -27,16 +28,27 @@ double cxx_matNormal_lik (const arma::cube& x, const arma::mat& Psi, const arma:
 		logTr += arma::accu((PsiInv * x.slice(i)) % (x.slice(i) * SigInv)) ;
 	}
 
-	double d1, d2, temp ; // log_det of Psi and Sig
-	arma::log_det(d1, temp, Psi) ; // arma::log_det(val, sign, A) -> |A| = exp(val)*sign
+	/***
+	 * log_det of Psi and Sig
+	 * arma::log_det(val, sign, A) -> |A| = exp(val)*sign
+	 ***/
+	double d1, d2, temp ;
+	arma::log_det(d1, temp, Psi) ;
 	arma::log_det(d2, temp, Sig) ;
 
 	return -0.5*(n0*r0*c0*log(2*PI) + n0*c0*d1 + n0*r0*d2 + logTr) ;
 }
 
-// MLE of Psi/Sigma/PsiInv/SigmaInv of N_{rxc}(0, Psi, Sigma).
-// Return list(logLik, Psi, Sig, PsiInv, SigInv)
-List cxx_matNormal_mle (arma::cube x, unsigned int maxIter=100, double tol=1.0e-8) {
+//' @title MLE of Row and Column Covariance Matrices
+//'
+//' @param x Array.
+//' @param maxInter The maximal number of iterations.
+//' @param tol Error tolerance.
+//'
+//' @return `list(logLik, Psi, PsiInv, Sig, SigInv)`.
+//' @noRd
+// [[Rcpp::export]]
+List cxx_matNormal_mle (const arma::cube& x, unsigned int maxIter=100, double tol=1.0e-8) {
 	unsigned int r0 = x.n_rows ;
 	unsigned int c0 = x.n_cols ;
 	unsigned int n0 = x.n_slices ;
@@ -44,7 +56,7 @@ List cxx_matNormal_mle (arma::cube x, unsigned int maxIter=100, double tol=1.0e-
 	arma::mat Psi = arma::eye(r0, r0), PsiInv = arma::eye(r0, r0) ;
 	arma::mat Sig = arma::eye(c0, c0), SigInv = arma::eye(c0, c0) ;
 
-	double logLik = cxx_matNormal_lik(x, Psi, Sig) ;
+	double logLik = cxx_matNormal_logLik(x, Psi, Sig) ;
 	double logLikOld = logLik ;
 	double err = tol + 1.0 ;
 	unsigned int k = 0 ;
@@ -65,7 +77,7 @@ List cxx_matNormal_mle (arma::cube x, unsigned int maxIter=100, double tol=1.0e-
 		SigInv = arma::inv(Sig) ;
 
 		logLikOld = logLik ;
-		logLik = cxx_matNormal_lik(x, Psi, Sig) ;
+		logLik = cxx_matNormal_logLik(x, Psi, Sig) ;
 		err = fabs(logLik - logLikOld) ;
 		k++ ;
 	}
@@ -77,17 +89,25 @@ List cxx_matNormal_mle (arma::cube x, unsigned int maxIter=100, double tol=1.0e-
 	) ;
 }
  
-// If `(flag)_{ij} = FALSE`, (M1)_{ij} and M2{ij} are within group mean 
-// value; otherwize they are estimated as pooled mean value. Return 
-// numeric array of `r x c x 2`.
+//' @title Estimate Mean Matrices of Class 1 and 2
+//' @description If `flag(i, j)` is `FALSE`, `M1(i, j)` and `M2(i, j)` are
+//' estimated within groups respectively; otherwise, they are estimated as
+//' the pooled mean value.
+//'
+//' @param x1 See [get_suppSet()].
+//' @param x2 See [get_suppSet()].
+//' @param flag The result returned from [get_suppSet()].
+//'
+//' @return Array with two slices.
+//' @noRd
 // [[Rcpp::export]]
-arma::cube cxx_mean (arma::cube x1, arma::cube x2, LogicalMatrix flag) {
+arma::cube cxx_mean (const arma::cube& x1, const arma::cube& x2, const LogicalMatrix& flag) {
 	unsigned int r0 = x1.n_rows ;
 	unsigned int c0 = x1.n_cols ;
-	unsigned int n1 = x1.n_slices ;
-	unsigned int n2 = x2.n_slices ;
-	double pi01 = (double) n1/(n1+n2) ;
-	double pi02 = (double) n2/(n1+n2) ;
+	double n1 = x1.n_slices ;
+	double n2 = x2.n_slices ;
+	double pi01 = n1/(n1+n2) ;
+	double pi02 = n2/(n1+n2) ;
 	arma::mat mu1 = mean(x1, 2) ;
 	arma::mat mu2 = mean(x2, 2) ;
 
@@ -106,10 +126,16 @@ arma::cube cxx_mean (arma::cube x1, arma::cube x2, LogicalMatrix flag) {
 	return M ;
 }
 
-// Centeralize samples by substracting samples by their mean matrice and bind 
-// them together. `flag` is logical matrix of `r x c` and is used to estimate
-// the mean matrice. Return Numeric array of `r x c x (n1+n2)`.
-arma::cube cxx_centralize_samples (arma::cube x1, arma::cube x2, LogicalMatrix flag) {
+//' @title Center Sample Data
+//'
+//' @param x1 See [get_suppSet()].
+//' @param x2 See [get_suppSet()].
+//' @param flag The result returned from [get_suppSet()].
+//'
+//' @return Array.
+//' @noRd
+// [[Rcpp::export]]
+arma::cube cxx_centralize_samples (const arma::cube& x1, const arma::cube& x2, const LogicalMatrix& flag) {
 	unsigned int r0 = x1.n_rows ;
 	unsigned int c0 = x1.n_cols ;
 	unsigned int n1 = x1.n_slices ;
@@ -127,8 +153,14 @@ arma::cube cxx_centralize_samples (arma::cube x1, arma::cube x2, LogicalMatrix f
 	return dat ;
 }
 
-// Use the centralized samples from `x1` and `x2` to obtain the MLE of the row 
-// and the column covariance matrices and their inverse matrices.
+//' @title Inverse of the MLE of Row and Column Covariance Matrices
+//'
+//' @param x1  See [get_suppSet()].
+//' @param x2  See [get_suppSet()].
+//' @param flag The result returned from [get_suppSet()].
+//'
+//' @return See the value of [cxx_matNormal_mle()].
+//' @noRd
 // [[Rcpp::export]]
 List cxx_prec (arma::cube x1, arma::cube x2, LogicalMatrix flag) {
     return cxx_matNormal_mle(cxx_centralize_samples(x1, x2, flag)) ;

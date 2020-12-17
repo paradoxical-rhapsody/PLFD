@@ -20,6 +20,7 @@ install_git("https://gitee.com/xu-zc/PLFD.git")
 ```
 or install with a vignette 
 ```R
+library(remotes)
 install_git("https://gitee.com/xu-zc/PLFD.git", build_vignettes=TRUE)
 ```
 

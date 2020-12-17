@@ -8,13 +8,18 @@
 
 * `RcppArmadillo >= 0.9.800`
 
-
 ## Installation
+
+Pre-compiled version of `PLFD` is not yet released on [CRAN](https://cran.r-project.org/) currently. 
+
+One can install it from source within R via
 
 ```R
 library(remotes)
 install_git("https://gitee.com/xu-zc/PLFD.git")
 ```
+
+To compile `PLFD` from source on win-platform, ensure the [Rtools](https://cran.r-project.org/) is deployed.
 
 ## Usage
 

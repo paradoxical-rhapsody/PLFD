@@ -24,7 +24,7 @@ library(remotes)
 install_git("https://gitee.com/xu-zc/PLFD.git", build_vignettes=TRUE)
 ```
 
-To compile `PLFD` from source on win-platform, ensure the [Rtools](https://cran.r-project.org/) is deployed.
+**To compile `PLFD` from source on win-platform, ensure the [Rtools](https://cran.r-project.org/) is deployed.**
 
 ## Usage
 

@@ -12,9 +12,8 @@
 ## Installation
 
 ```R
-# Currently this package is not available on CRAN.
 library(remotes)
-install_git("https://gitee.com/xu-zc/fastMatrix.git")
+install_git("https://gitee.com/xu-zc/PLFD.git")
 ```
 
 ## Usage

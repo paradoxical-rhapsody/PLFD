@@ -2,37 +2,36 @@
 #include <RcppArmadillo.h>
 using namespace Rcpp;
 
-double log_binom (unsigned int n, unsigned int k) {
-    // log(binom(n, k))
-    if (n < k)  return NA_REAL ;
-    if (k < 0)  return NA_REAL ;
-    if (k == 0) return 0.0 ; // log(binom(n, 0))=log(1)=0
-    
-    IntegerVector t = seq(1, k) ;
-    return sum(log((n + 1.0) / as<NumericVector>(t) - 1.0)) ;
-}
-
-// The (log)likelihood of samples from N_{rxc}(0, Psi, Sigma)
-double cxx_matNormal_lik (arma::cube x, arma::mat Psi, arma::mat Sig, bool doLog=true) {
+//' @title Log-Likelihood of Matrix-Variate Normal Data
+//' @description It supposes that the data are independently
+//'   sampled from `N(0, Psi, Sigma)`.
+//'
+//' @param x Array of *r x c x n*.
+//' @param Psi Row convariance matrix.
+//' @param Sig Column covariance matrix.
+//'
+//' @noRd
+// [[Rcpp::export]]
+double cxx_matNormal_lik (const arma::cube& x, const arma::mat& Psi, const arma::mat& Sig) {
 	unsigned int r0 = x.n_rows ;
 	unsigned int c0 = x.n_cols ;
 	unsigned int n0 = x.n_slices ;
 
-	arma::mat PsiInv = arma::inv(Psi) ;  // arma::inv_sympd(A) throws warning if A
-	arma::mat SigInv = arma::inv(Sig) ;  // is asymmetric even because of round-off
+	// `arma::inv_sympd(A)` throws warning if A is asymmetric even because of round-off.
+	// `arma::inv(A)` is for general square matrix.
+	arma::mat PsiInv = arma::inv_sympd(Psi) ;
+	arma::mat SigInv = arma::inv_sympd(Sig) ;
 
 	double logTr = 0.0 ;
 	for (unsigned int i=0; i < n0; i++) {
 		logTr += arma::accu((PsiInv * x.slice(i)) % (x.slice(i) * SigInv)) ;
 	}
 
-	double d1, d2 ; // log_det of Psi and Sig
-	double temp ;
+	double d1, d2, temp ; // log_det of Psi and Sig
 	arma::log_det(d1, temp, Psi) ; // arma::log_det(val, sign, A) -> |A| = exp(val)*sign
 	arma::log_det(d2, temp, Sig) ;
 
-	double logLik = -0.5*(n0*r0*c0*log(2*PI) + n0*c0*d1 + n0*r0*d2 + logTr) ;
-	if (doLog) { return logLik ; } else { return exp(logLik) ; }
+	return -0.5*(n0*r0*c0*log(2*PI) + n0*c0*d1 + n0*r0*d2 + logTr) ;
 }
 
 // MLE of Psi/Sigma/PsiInv/SigmaInv of N_{rxc}(0, Psi, Sigma).
@@ -45,7 +44,7 @@ List cxx_matNormal_mle (arma::cube x, unsigned int maxIter=100, double tol=1.0e-
 	arma::mat Psi = arma::eye(r0, r0), PsiInv = arma::eye(r0, r0) ;
 	arma::mat Sig = arma::eye(c0, c0), SigInv = arma::eye(c0, c0) ;
 
-	double logLik = cxx_matNormal_lik(x, Psi, Sig, true) ;
+	double logLik = cxx_matNormal_lik(x, Psi, Sig) ;
 	double logLikOld = logLik ;
 	double err = tol + 1.0 ;
 	unsigned int k = 0 ;
@@ -66,7 +65,7 @@ List cxx_matNormal_mle (arma::cube x, unsigned int maxIter=100, double tol=1.0e-
 		SigInv = arma::inv(Sig) ;
 
 		logLikOld = logLik ;
-		logLik = cxx_matNormal_lik(x, Psi, Sig, true) ;
+		logLik = cxx_matNormal_lik(x, Psi, Sig) ;
 		err = fabs(logLik - logLikOld) ;
 		k++ ;
 	}

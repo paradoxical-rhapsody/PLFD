@@ -6,6 +6,19 @@
 
 using namespace Rcpp;
 
+// cxx_matNormal_lik
+double cxx_matNormal_lik(const arma::cube& x, const arma::mat& Psi, const arma::mat& Sig);
+RcppExport SEXP _PLFD_cxx_matNormal_lik(SEXP xSEXP, SEXP PsiSEXP, SEXP SigSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::cube& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Sig(SigSEXP);
+    rcpp_result_gen = Rcpp::wrap(cxx_matNormal_lik(x, Psi, Sig));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cxx_mean
 arma::cube cxx_mean(arma::cube x1, arma::cube x2, LogicalMatrix flag);
 RcppExport SEXP _PLFD_cxx_mean(SEXP x1SEXP, SEXP x2SEXP, SEXP flagSEXP) {
@@ -34,6 +47,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_PLFD_cxx_matNormal_lik", (DL_FUNC) &_PLFD_cxx_matNormal_lik, 3},
     {"_PLFD_cxx_mean", (DL_FUNC) &_PLFD_cxx_mean, 3},
     {"_PLFD_cxx_prec", (DL_FUNC) &_PLFD_cxx_prec, 3},
     {NULL, NULL, 0}

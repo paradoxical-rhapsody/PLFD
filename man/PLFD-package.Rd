@@ -6,15 +6,18 @@
 \alias{PLFD-package}
 \title{PLFD: A Portmanteau Local Feature Discrimination Approach to the High-Dimensional Matrix-Variate Data}
 \source{
-A Portmanteau Local Feature Discrimination Approach to the Classification 
+A Portmanteau Local Feature Discrimination Approach to the Classification
 with High-dimensional Matrix-variate Data.
 }
 \description{
-Identify the local features that are significant to classification and employ them
-    to form sub-discriminant functions, then aggregate the subfunctions for classification.
+It is an implementation of the portmanteau-local-feature discrimination. See the source for details.
 }
-\details{
-Identify the local features that are significant to classification and employ
-them to form sub-discriminant functions, then aggregate the subfunctions for classification.
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://gitee.com/xu-zc/PLFD}
+  \item Report bugs at \url{https://gitee.com/xu-zc/PLFD/issues}
+}
+
 }
 \keyword{internal}

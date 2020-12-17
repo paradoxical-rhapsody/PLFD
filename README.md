@@ -12,11 +12,9 @@
 ## Installation
 
 ```R
-install.packages('PLFD')
-```
-or
-```R
-remotes::install_git("https://gitee.com/xu-zc/fastMatrix.git")
+# Currently this package is not available on CRAN.
+library(remotes)
+install_git("https://gitee.com/xu-zc/fastMatrix.git")
 ```
 
 ## Usage

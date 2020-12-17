@@ -3,17 +3,14 @@
 ## Dependencies
 
 * `R > 3.5.0`
-
 * `Rcpp >= 1.0.2`
-
 * `RcppArmadillo >= 0.9.800`
 
 ## Installation
 
-Pre-compiled version of `PLFD` is not yet released on [CRAN](https://cran.r-project.org/) currently. 
+On win-platform, ensure that the [Rtools](https://cran.r-project.org/) is deployed well to compile `PLFD` from source.
 
 One can install it from source within R via
-
 ```R
 library(remotes)
 install_git("https://gitee.com/xu-zc/PLFD.git")
@@ -24,7 +21,7 @@ library(remotes)
 install_git("https://gitee.com/xu-zc/PLFD.git", build_vignettes=TRUE)
 ```
 
-**To compile `PLFD` from source on win-platform, ensure the [Rtools](https://cran.r-project.org/) is deployed.**
+Pre-compiled version of `PLFD` is not yet released on [CRAN](https://cran.r-project.org/) currently. 
 
 ## Usage
 

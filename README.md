@@ -3,8 +3,6 @@
 ## Dependencies
 
 * `R > 3.5.0`
-* `Rcpp >= 1.0.2`
-* `RcppArmadillo >= 0.9.800`
 
 ## Installation
 

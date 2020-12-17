@@ -2,7 +2,7 @@ Package: PLFD
 Type: Package
 Title: A Portmanteau Local Feature Discrimination Approach to the High-Dimensional Matrix-Variate Data
 Version: 0.9.0
-Date: 2020-12-17
+Date: 2020-12-16
 Author: Zengchao Xu, Shan Luo, Zehua Chen
 Maintainer: Zengchao Xu <xuzengchao@sjtu.edu.cn>
 Description: It is an implementation of the portmanteau-local-feature discrimination. See the source for details.

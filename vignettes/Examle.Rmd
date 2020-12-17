@@ -14,9 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Introduction
-For ease of use, the `PLFD` has been complied on win10-platform. The target environment is `R-3.6`. 
-
 This example applies the `PLFD` to the first set of settings in the original paper. 
 
 ```{r setup}
@@ -45,6 +42,8 @@ r0 <- c0 <- 5
 system.time(plfd.model <- plfd(x1=x2, x2=x2, r0=r0, c0=c0, xtest=xTest, ytest=yTest))
 summary(plfd.model)
 ```
+
+The target environment is listed below.
 
 ```{r sessionInfo}
 sessionInfo()

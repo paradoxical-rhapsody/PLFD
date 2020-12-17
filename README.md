@@ -18,6 +18,10 @@ One can install it from source within R via
 library(remotes)
 install_git("https://gitee.com/xu-zc/PLFD.git")
 ```
+or install with a vignette 
+```R
+install_git("https://gitee.com/xu-zc/PLFD.git", build_vignettes=TRUE)
+```
 
 To compile `PLFD` from source on win-platform, ensure the [Rtools](https://cran.r-project.org/) is deployed.
 

@@ -31,7 +31,6 @@ M1[1:10, 1:10] <- matrix(
   nrow=10
 )
 
-
 x1 <- sweep(array(rnorm(rDim*cDim*n1), c(rDim, cDim, n1)), 1:2, M1, '+')
 x2 <- array(rnorm(rDim*cDim*n2), c(rDim, cDim, n2))
 

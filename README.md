@@ -1,7 +1,7 @@
 ## Dependencies
 
 * `R > 3.5.0`
-* If you would like to install `PLFD` from source on win-platform, ensure that the [Rtools](https://cran.r-project.org/bin/windows/Rtools) is deployed well. 
+* If you would like to install `PLFD` from source on win-platform, ensure that the [Rtools](https://cran.r-project.org/bin/windows/Rtools/) is deployed well. 
 
 ## Installation
 

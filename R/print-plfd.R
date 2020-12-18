@@ -13,8 +13,8 @@ print.plfd <- function (x, ...) {
     cat(sprintf('Misclassification rate of **traning** data is %.3f.\n\n', x$mcr))
 
     if (!is.null(x$ytest.hat)) {
-        cat('Predict testing data:\n' )
-        cat(x$ytest.hat[, 'group'])
+        # cat('Predict testing data:\n' )
+        # cat(x$ytest.hat[, 'group'])
         if(!is.null(x$mcr.test)) {
             cat(sprintf('\nMisclassification rate of **testing** data is %.3f.\n', x$mcr.test))
         }

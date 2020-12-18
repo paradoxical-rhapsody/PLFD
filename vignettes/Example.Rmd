@@ -26,7 +26,11 @@ rDim <- cDim <- 60
 n1Test <- n2Test <- 1000
 
 M1 <- matrix(0.0, rDim, cDim)
-M1[1:10, 1:10] <- matrix(runif(10, 0.2, 0.8)*rbinom(10, 1, 0.5), 10, 10)
+M1[1:10, 1:10] <- matrix(
+  runif(10*10, 0.2, 0.8)*sample(-1:1, 10*10, TRUE, rep(1/3, 3)),
+  nrow=10
+)
+
 
 x1 <- sweep(array(rnorm(rDim*cDim*n1), c(rDim, cDim, n1)), 1:2, M1, '+')
 x2 <- array(rnorm(rDim*cDim*n2), c(rDim, cDim, n2))
@@ -39,7 +43,8 @@ dim(xTest) <- c(rDim, cDim, n1Test+n2Test)
 yTest <- c(rep(1, n1Test), rep(2, n2Test))
 
 r0 <- c0 <- 5
-system.time(plfd.model <- plfd(x1=x2, x2=x2, r0=r0, c0=c0, xtest=xTest, ytest=yTest))
+system.time(plfd.model <- plfd(x1=x1, x2=x2, r0=r0, c0=c0, xtest=xTest, ytest=yTest))
+
 print(plfd.model)
 
 predict(plfd.model, xTest)

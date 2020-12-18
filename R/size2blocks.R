@@ -7,10 +7,10 @@
 #' index of one submatrix.
 #' 
 #' @examples 
-#' size2index(30, 25, 5, 5)
-#' size2index(30, 25, 4, 4)
+#' size2blocks(30, 25, 5, 5)
+#' size2blocks(30, 25, 4, 4)
 #' 
-#' @noRd 
+#' @noRd
 size2blocks <- function(rDim, cDim, r0, c0) {
     stopifnot(rDim >= r0)
     stopifnot(cDim >= c0)

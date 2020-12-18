@@ -6,7 +6,7 @@
 #' @param blockMode See [plfd()].
 #' 
 #' @return Logical matrix with `FALSE` corresponds to the nonzero entry.
-#' @noRd 
+#' @noRd
 get_suppSet <- function (x1, x2, blockMode) {
     stopifnot(NROW(x2) == NROW(x1))
     stopifnot(NCOL(x2) == NCOL(x1))

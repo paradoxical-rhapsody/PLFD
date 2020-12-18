@@ -11,7 +11,7 @@
 #' @param alpha See [plfd()].
 #' 
 #' @return List with each component including the index of rows and columns of significant blocks.
-#' @noRd 
+#' @noRd
 get_feature_blocks <- function (x1, x2, r0, c0, blockList, permNum, alpha) {
     stopifnot(NROW(x2) == NROW(x1))
     stopifnot(NCOL(x2) == NCOL(x1))

@@ -16,6 +16,14 @@
 #' @param permNum The number of permutation (default=50).
 #' @param alpha The upper alpha` quantile of the permutation statistics (default=0). 
 #' 
+#' @details 
+#' There are two manners to specify the blocks under consideration. In the case that 
+#' the matrix-variate is partition into non-overlapping blocks that share the common row size and
+#' column size, these sizes can be specified by \code{r0} and \code{c0}. Otherwise, the 
+#' blocks can be flexibly specified by \code{blockList}, which should be a list that each 
+#' component includes \code{rIdx} and \code{cIdx} corresponding to the rows index and columns 
+#' index of a submatrix-variate. See examples.
+#' 
 #' @return List, \itemize{
 #'  \item \code{paras} List including the parameters of significant blocks.
 #'  \item \code{y} Self-predicted results for training data. It is a matrix of \eqn{(n_1+n_2)\times 2}, 
@@ -25,14 +33,6 @@
 #'        matrix where the first column is scores and the second column is predicted group.
 #'  \item \code{mcr.test} The misclassification rate for \code{xtest} if \code{ytest} is provided.
 #' }
-#' 
-#' @details 
-#' There are two manners to specify the blocks under consideration. In the case that 
-#' the matrix-variate is partition into non-overlapping blocks that share the common row size and
-#' column size, these sizes can be specified by \code{r0} and \code{c0}. Otherwise, the 
-#' blocks can be flexibly specified by \code{blockList}, which should be a list that each 
-#' component includes \code{rIdx} and \code{cIdx} corresponding to the rows index and columns 
-#' index of a submatrix-variate. See examples.
 #' 
 #' @examples
 #' ## Simulate the data of small dimension and sample size for saving time

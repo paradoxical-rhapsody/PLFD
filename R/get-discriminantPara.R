@@ -7,8 +7,7 @@
 #' 
 #' @return `list(M, B)`, wherein `M=(M1+M2)/2` and `B = inv(Psi) * (M1 - M2) * inv(Sigma)` are 
 #' the estimated parameter involved in `W(X) = tr((x - M)\' B)`.
-#' 
-#' @noRd 
+#' @noRd
 get_discriminantPara <- function (x1, x2, blockMode) {
     stopifnot(NROW(x1) == NROW(x2))
     stopifnot(NCOL(x1) == NCOL(x2))

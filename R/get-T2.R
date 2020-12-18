@@ -3,13 +3,12 @@
 #' @param x1 See [get_suppSet()].
 #' @param x2 See [get_suppSet()].
 #' 
-#' @return The scaled \eqn{T^2}-statistic.
-#' 
 #' @details The total sample size should be larger than the row size and
 #' column size so that the estimated row and column covariance matrices 
 #' are non-singular.
 #' 
-#' @noRd 
+#' @return The scaled \eqn{T^2}-statistic.
+#' @noRd
 get_T2 <- function (x1, x2) {
     stopifnot(NROW(x2) == NROW(x1))
     stopifnot(NCOL(x2) == NCOL(x1))

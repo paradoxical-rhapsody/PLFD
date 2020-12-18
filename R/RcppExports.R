@@ -11,21 +11,27 @@
 #'
 #' @return Log-likelihood value.
 #' @noRd
-cxx_matNormal_logLik <- function(x, Psi, Sig) {
-    .Call(`_PLFD_cxx_matNormal_logLik`, x, Psi, Sig)
-}
+NULL
 
 #' @title MLE of Row and Column Covariance Matrices
 #'
 #' @param x Array.
-#' @param maxInter The maximal number of iterations.
+#' @param maxIter The maximal number of iterations.
 #' @param tol Error tolerance.
 #'
 #' @return `list(logLik, Psi, PsiInv, Sig, SigInv)`.
 #' @noRd
-cxx_matNormal_mle <- function(x, maxIter = 100L, tol = 1.0e-8) {
-    .Call(`_PLFD_cxx_matNormal_mle`, x, maxIter, tol)
-}
+NULL
+
+#' @title Center Sample Data
+#'
+#' @param x1 See [get_suppSet()].
+#' @param x2 See [get_suppSet()].
+#' @param flag The result returned from [get_suppSet()].
+#'
+#' @return Array.
+#' @noRd
+NULL
 
 #' @title Estimate Mean Matrices of Class 1 and 2
 #' @description If `flag(i, j)` is `FALSE`, `M1(i, j)` and `M2(i, j)` are
@@ -40,18 +46,6 @@ cxx_matNormal_mle <- function(x, maxIter = 100L, tol = 1.0e-8) {
 #' @noRd
 cxx_mean <- function(x1, x2, flag) {
     .Call(`_PLFD_cxx_mean`, x1, x2, flag)
-}
-
-#' @title Center Sample Data
-#'
-#' @param x1 See [get_suppSet()].
-#' @param x2 See [get_suppSet()].
-#' @param flag The result returned from [get_suppSet()].
-#'
-#' @return Array.
-#' @noRd
-cxx_centralize_samples <- function(x1, x2, flag) {
-    .Call(`_PLFD_cxx_centralize_samples`, x1, x2, flag)
 }
 
 #' @title Inverse of the MLE of Row and Column Covariance Matrices

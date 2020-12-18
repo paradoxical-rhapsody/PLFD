@@ -12,7 +12,6 @@ using namespace Rcpp;
 //'
 //' @return Log-likelihood value.
 //' @noRd
-// [[Rcpp::export]]
 double cxx_matNormal_logLik (const arma::cube& x, const arma::mat& Psi, const arma::mat& Sig) {
 	unsigned int r0 = x.n_rows ;
 	unsigned int c0 = x.n_cols ;
@@ -42,12 +41,11 @@ double cxx_matNormal_logLik (const arma::cube& x, const arma::mat& Psi, const ar
 //' @title MLE of Row and Column Covariance Matrices
 //'
 //' @param x Array.
-//' @param maxInter The maximal number of iterations.
+//' @param maxIter The maximal number of iterations.
 //' @param tol Error tolerance.
 //'
 //' @return `list(logLik, Psi, PsiInv, Sig, SigInv)`.
 //' @noRd
-// [[Rcpp::export]]
 List cxx_matNormal_mle (const arma::cube& x, unsigned int maxIter=100, double tol=1.0e-8) {
 	unsigned int r0 = x.n_rows ;
 	unsigned int c0 = x.n_cols ;
@@ -134,7 +132,6 @@ arma::cube cxx_mean (const arma::cube& x1, const arma::cube& x2, const LogicalMa
 //'
 //' @return Array.
 //' @noRd
-// [[Rcpp::export]]
 arma::cube cxx_centralize_samples (const arma::cube& x1, const arma::cube& x2, const LogicalMatrix& flag) {
 	unsigned int r0 = x1.n_rows ;
 	unsigned int c0 = x1.n_cols ;

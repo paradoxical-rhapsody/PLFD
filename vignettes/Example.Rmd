@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 This example applies the `PLFD` to the first set of settings in the original paper. 
 
-```{r setup}
+```{r PLFD}
 rm(list=ls())
 set.seed(2020)
 library(PLFD)

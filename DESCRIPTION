@@ -1,11 +1,14 @@
 Package: PLFD
 Type: Package
-Title: A Portmanteau Local Feature Discrimination Approach to the High-Dimensional Matrix-Variate Data
-Version: 0.9.0
-Date: 2020-12-16
-Author: Zengchao Xu, Shan Luo, Zehua Chen
-Maintainer: Zengchao Xu <xuzengchao@sjtu.edu.cn>
-Description: It is an implementation of the portmanteau-local-feature discrimination. See the source for details.
+Title: Portmanteau Local Feature Discrimination for Matrix-Variate Data
+Version: 0.9.1
+Date: 2020-12-22
+Authors@R: c(
+    person("Zengchao", "Xu", role = c("aut", "cre"), email = "xuzengchao@sjtu.edu.cn"),
+    person("Shan", "Luo",    role="aut"),
+    person("Zehua", "Chen",  role="aut"))
+Maintainer: Zengchao Xu <xzcdyx@outlook.com>
+Description: In portmanteau-local-feature discrimination, it first identifies the local discriminant features and their differential structures, then the discriminant rule is constructed by pooling the identified local features together. This method is applicable to high-dimensional matrix-variate data, that is to say, the row or column size of matrix-variate can be larger than the total sample size.
 Depends: R (>= 3.5.0)
 Imports: Rcpp (>= 1.0.2)
 LinkingTo: Rcpp (>= 1.0.2), RcppArmadillo (>= 0.9.800)

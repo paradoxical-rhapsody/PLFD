@@ -4,19 +4,29 @@
 \name{PLFD-package}
 \alias{PLFD}
 \alias{PLFD-package}
-\title{PLFD: A Portmanteau Local Feature Discrimination Approach to the High-Dimensional Matrix-Variate Data}
+\title{PLFD: Portmanteau Local Feature Discrimination for Matrix-Variate Data}
 \source{
 A Portmanteau Local Feature Discrimination Approach to the Classification
 with High-dimensional Matrix-variate Data.
 }
 \description{
-It is an implementation of the portmanteau-local-feature discrimination. See the source for details.
+In portmanteau-local-feature discrimination, it first identifies the local discriminant features and their differential structures, then the discriminant rule is constructed by pooling the identified local features together. This method is applicable to high-dimensional matrix-variate data, that is to say, the row or column size of matrix-variate can be larger than the total sample size.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://gitee.com/xu-zc/PLFD}
   \item Report bugs at \url{https://gitee.com/xu-zc/PLFD/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Zengchao Xu \email{xuzengchao@sjtu.edu.cn}
+
+Authors:
+\itemize{
+  \item Shan Luo
+  \item Zehua Chen
 }
 
 }

@@ -1,8 +1,8 @@
 ---
-title: "Example"
+title: "A Portmanteau Local Feature Discrimination for High-Dimensional Matrix-Variate Data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example}
+  %\VignetteIndexEntry{A Portmanteau Local Feature Discrimination for High-Dimensional Matrix-Variate Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -13,7 +13,7 @@
 #' forward/backward step, where *BIC* serves as the stopping rule.
 #' @param xtest (Optional) New samples to be predicted.
 #' @param ytest (Optional) Vector with \eqn{1,2} entries corresponds to the labels of \code{xtest}.
-#' @param permNum The number of permutation (default=50).
+#' @param permNum The number of permutation (default=100).
 #' @param alpha The upper alpha` quantile of the permutation statistics (default=0). 
 #' 
 #' @details 
@@ -63,7 +63,7 @@
 #' 
 #' @importFrom stats quantile predict
 #' @export 
-plfd <- function(x1, x2, r0, c0, blockList, blockMode='dense', xtest, ytest, permNum=50, alpha=0.0) {
+plfd <- function(x1, x2, r0, c0, blockList, blockMode='dense', xtest, ytest, permNum=100, alpha=0.0) {
     stopifnot(NROW(x1) == NROW(x2))
     stopifnot(NCOL(x1) == NCOL(x2))
     rDim <- NROW(x1)

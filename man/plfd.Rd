@@ -13,7 +13,7 @@ plfd(
   blockMode = "dense",
   xtest,
   ytest,
-  permNum = 50,
+  permNum = 100,
   alpha = 0
 )
 }
@@ -37,7 +37,7 @@ forward/backward step, where \emph{BIC} serves as the stopping rule.}
 
 \item{ytest}{(Optional) Vector with \eqn{1,2} entries corresponds to the labels of \code{xtest}.}
 
-\item{permNum}{The number of permutation (default=50).}
+\item{permNum}{The number of permutation (default=100).}
 
 \item{alpha}{The upper alpha` quantile of the permutation statistics (default=0).}
 }

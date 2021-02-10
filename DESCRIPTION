@@ -7,7 +7,7 @@ Authors@R: c(
     person("Zengchao", "Xu", role = c("aut", "cre"), email = "xuzengchao@sjtu.edu.cn"),
     person("Shan", "Luo",    role="aut"),
     person("Zehua", "Chen",  role="aut"))
-Maintainer: Zengchao Xu <xzcdyx@outlook.com>
+Maintainer: Zengchao Xu <xuzengchao@sjtu.edu.cn>
 Description: In portmanteau-local-feature discrimination, it first identifies the local discriminant features and their differential structures, then the discriminant rule is constructed by pooling the identified local features together. This method is applicable to high-dimensional matrix-variate data, that is to say, the row or column size of matrix-variate can be larger than the total sample size.
 Depends: R (>= 3.5.0)
 Imports: Rcpp (>= 1.0.2)

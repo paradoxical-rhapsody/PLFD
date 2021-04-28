@@ -1,8 +1,9 @@
 #' @title Matrix-variate Linear Discriminant Analysis
-#' @description Matrix linear discriminant analysis.
+#' @description \loadmathjax
+#' Matrix linear discriminant analysis.
 #' 
-#' @param x1 Array of \eqn{r \times c \times n_1}, samples from group 1.
-#' @param x2 Array of \eqn{r \times c \times n_2}, samples from group 2.
+#' @param x1 Array of \mjeqn{r \times c \times n_1}{r*c*n1}, samples from group 1.
+#' @param x2 Array of \mjeqn{r \times c \times n_2}{r*c*n2}, samples from group 2.
 #' @param r0,c0 The common row size and column size of blocks. See details.
 #' @param blockList List including the index of considered blocks. Optional if `r0` and
 #' `c0` are provided. See details.
@@ -12,26 +13,28 @@
 #' If `blockMode=="fd"` or `"bd"`, the nonzero positions are detected by 
 #' forward/backward step, where *BIC* serves as the stopping rule.
 #' @param xtest (Optional) New samples to be predicted.
-#' @param ytest (Optional) Vector with \eqn{1,2} entries corresponds to the labels of \code{xtest}.
+#' @param ytest (Optional) Vector with of \mjeqn{1,2}{1,2} entries corresponds to 
+#'  labels of `xtest`.
 #' @param permNum The number of permutation (default=100).
 #' @param alpha The upper alpha` quantile of the permutation statistics (default=0). 
 #' 
 #' @details 
 #' There are two manners to specify the blocks under consideration. In the case that 
 #' the matrix-variate is partition into non-overlapping blocks that share the common row size and
-#' column size, these sizes can be specified by \code{r0} and \code{c0}. Otherwise, the 
-#' blocks can be flexibly specified by \code{blockList}, which should be a list that each 
-#' component includes \code{rIdx} and \code{cIdx} corresponding to the rows index and columns 
+#' column size, these sizes can be specified by `r0` and `c0`. Otherwise, the 
+#' blocks can be flexibly specified by `blockList`, which should be a list that each 
+#' component includes `rIdx` and `cIdx` corresponding to the rows index and columns 
 #' index of a submatrix-variate. See examples.
 #' 
 #' @return List, \itemize{
-#'  \item \code{paras} List including the parameters of significant blocks.
-#'  \item \code{y} Self-predicted results for training data. It is a matrix of \eqn{(n_1+n_2)\times 2}, 
-#'          the first column is the scores and the second column is the predicted labels.
-#'  \item \code{mcr} The self-predicted misclassification rate for training samples.
-#'  \item \code{ytest.hat} The predicted result for \code{xtest} if it is provided. It is a
+#'  \item `paras` List including the parameters of significant blocks.
+#'  \item `y` Self-predicted results for training data. It is a matrix of 
+#'      \mjeqn{(n_1+n_2)\times 2}{(n1+n2)*2}, the first column is the 
+#'      scores and the second column is the predicted labels.
+#'  \item `mcr` The self-predicted misclassification rate for training samples.
+#'  \item `ytest.hat` The predicted result for `xtest` if it is provided. It is a
 #'        matrix where the first column is scores and the second column is predicted group.
-#'  \item \code{mcr.test} The misclassification rate for \code{xtest} if \code{ytest} is provided.
+#'  \item `mcr.test` The misclassification rate for `xtest` if `ytest` is provided.
 #' }
 #' 
 #' @examples

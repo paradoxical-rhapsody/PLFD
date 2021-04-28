@@ -1,4 +1,11 @@
-2020-12-17 Zengchao XU <xuzengchao@sjtu.edu.cn>
+# 2021-04-28
+
+* Update documentation.
+
+* Add `mathjaxr` in `suggests` field.
+
+# 2020-12-17
 
 * Update the documentation.
+
 * Add vignette.

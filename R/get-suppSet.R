@@ -1,5 +1,7 @@
 #' @title Detect the Nonzero Positions of `M1 - M2`
-#' @description Three modes are provided for identifying \eqn{supp(M_1 - M_2)}. See details.
+#' @description \loadmathjax
+#' Three modes are provided for identifying 
+#' \mjeqn{supp(M_1 - M_2)}{supp(M_1 - M_2)}. See details.
 #' 
 #' @param x1 Array.
 #' @param x2 Array with the same row and column size as `x1`.

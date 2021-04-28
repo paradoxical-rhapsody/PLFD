@@ -1,4 +1,5 @@
-#' @title Scaled \eqn{T^2}-statistic
+#' @title Scaled \mjeqn{T^2}{T^2}-statistic
+#' @description \loadmathjax
 #' 
 #' @param x1 See [get_suppSet()].
 #' @param x2 See [get_suppSet()].
@@ -7,7 +8,7 @@
 #' column size so that the estimated row and column covariance matrices 
 #' are non-singular.
 #' 
-#' @return The scaled \eqn{T^2}-statistic.
+#' @return The scaled \mjeqn{T^2}{T^2}-statistic.
 #' @noRd
 get_T2 <- function (x1, x2) {
     stopifnot(NROW(x2) == NROW(x1))

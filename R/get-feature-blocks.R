@@ -1,5 +1,6 @@
 #' @title Identify Sigificant Blocks
-#' @description Identify the blocks whose \eqn{T^2}-statistics are larger than a
+#' @description \loadmathjax
+#' Identify the blocks whose \mjeqn{T^2}{T^2}-statistics are larger than a
 #'  permutated thresholding.
 #' 
 #' @param x1 See [plfd()].

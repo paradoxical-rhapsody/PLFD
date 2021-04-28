@@ -18,9 +18,9 @@ plfd(
 )
 }
 \arguments{
-\item{x1}{Array of \eqn{r \times c \times n_1}, samples from group 1.}
+\item{x1}{Array of \mjeqn{r \times c \times n_1}{r\emph{c}n1}, samples from group 1.}
 
-\item{x2}{Array of \eqn{r \times c \times n_2}, samples from group 2.}
+\item{x2}{Array of \mjeqn{r \times c \times n_2}{r\emph{c}n2}, samples from group 2.}
 
 \item{r0, c0}{The common row size and column size of blocks. See details.}
 
@@ -35,7 +35,8 @@ forward/backward step, where \emph{BIC} serves as the stopping rule.}
 
 \item{xtest}{(Optional) New samples to be predicted.}
 
-\item{ytest}{(Optional) Vector with \eqn{1,2} entries corresponds to the labels of \code{xtest}.}
+\item{ytest}{(Optional) Vector with of \mjeqn{1,2}{1,2} entries corresponds to
+labels of \code{xtest}.}
 
 \item{permNum}{The number of permutation (default=100).}
 
@@ -44,8 +45,9 @@ forward/backward step, where \emph{BIC} serves as the stopping rule.}
 \value{
 List, \itemize{
 \item \code{paras} List including the parameters of significant blocks.
-\item \code{y} Self-predicted results for training data. It is a matrix of \eqn{(n_1+n_2)\times 2},
-the first column is the scores and the second column is the predicted labels.
+\item \code{y} Self-predicted results for training data. It is a matrix of
+\mjeqn{(n_1+n_2)\times 2}{(n1+n2)*2}, the first column is the
+scores and the second column is the predicted labels.
 \item \code{mcr} The self-predicted misclassification rate for training samples.
 \item \code{ytest.hat} The predicted result for \code{xtest} if it is provided. It is a
 matrix where the first column is scores and the second column is predicted group.
@@ -53,6 +55,7 @@ matrix where the first column is scores and the second column is predicted group
 }
 }
 \description{
+\loadmathjax
 Matrix linear discriminant analysis.
 }
 \details{

@@ -1,16 +1,16 @@
 Package: PLFD
 Type: Package
 Title: Portmanteau Local Feature Discrimination for Matrix-Variate Data
-Version: 0.9.2
-Date: 2020-12-22
+Version: 1.0.0
+Date: 2021-07-06
 Authors@R: c(
     person("Zengchao", "Xu", role = c("aut", "cre"), email = "xuzengchao@sjtu.edu.cn"),
     person("Shan", "Luo",    role="aut"),
     person("Zehua", "Chen",  role="aut"))
 Maintainer: Zengchao Xu <xuzengchao@sjtu.edu.cn>
-Description: In portmanteau-local-feature discrimination, it first identifies the local discriminant features and their differential structures, then the discriminant rule is constructed by pooling the identified local features together. This method is applicable to high-dimensional matrix-variate data, that is to say, the row or column size of matrix-variate can be larger than the total sample size.
+Description: The PLFD first identifies the local discriminant features and their differential structures, then the discriminant rule is constructed by pooling the identified local features together. This method is applicable to high-dimensional matrix-variate data.
 Depends: R (>= 3.5.0)
-Imports: Rcpp (>= 1.0.2)
+Imports: Rcpp (>= 1.0.2), mathjaxr
 LinkingTo: Rcpp (>= 1.0.2), RcppArmadillo (>= 0.9.800)
 URL: https://gitee.com/xu-zc/PLFD
 BugReports: https://gitee.com/xu-zc/PLFD/issues
@@ -21,7 +21,6 @@ Encoding: UTF-8
 RoxygenNote: 7.1.1
 Suggests: 
     knitr,
-    rmarkdown,
-    mathjaxr
+    rmarkdown
 RdMacros: mathjaxr
 VignetteBuilder: knitr

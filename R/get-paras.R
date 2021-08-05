@@ -1,12 +1,11 @@
-#' @title Estimate discriminant parameters of given blocks.
-#' @description Estimate the discriminant parameters for all feature blocks.
+#' @title Estimate Discriminant Parameters for Feature Blocks.
 #' 
 #' @param x1 See [plfd()].
 #' @param x2 See [plfd()].
 #' @param blockList See [plfd()].
 #' @param blockMode See [plfd()].
 #' 
-#' @return List Each element corresponds to one block given.
+#' @return List. Each element corresponds to one block.
 #' @noRd 
 get_paras <- function(x1, x2, blockList, blockMode) {
     for (i in seq(blockList)) {

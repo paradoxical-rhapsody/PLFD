@@ -27,7 +27,7 @@ NULL
 #' @noRd
 NULL
 
-#' @title Center Sample Data
+#' @title Center Data
 #'
 #' @param x1 See [get_suppSet()].
 #' @param x2 See [get_suppSet()].

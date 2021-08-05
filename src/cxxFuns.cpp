@@ -124,7 +124,7 @@ arma::cube cxx_mean (const arma::cube& x1, const arma::cube& x2, const LogicalMa
     return M ;
 }
 
-//' @title Center Sample Data
+//' @title Center Data
 //'
 //' @param x1 See [get_suppSet()].
 //' @param x2 See [get_suppSet()].
@@ -132,7 +132,7 @@ arma::cube cxx_mean (const arma::cube& x1, const arma::cube& x2, const LogicalMa
 //'
 //' @return Array.
 //' @noRd
-arma::cube cxx_center_data (const arma::cube& x1, const arma::cube& x2, const LogicalMatrix& flag) {
+arma::cube cxx_center_data (const arma::cube & x1, const arma::cube & x2, const LogicalMatrix & flag) {
     unsigned int r0 = x1.n_rows ;
     unsigned int c0 = x1.n_cols ;
     unsigned int n1 = x1.n_slices ;
@@ -142,7 +142,7 @@ arma::cube cxx_center_data (const arma::cube& x1, const arma::cube& x2, const Lo
     arma::cube dat = arma::zeros(r0, c0, n1+n2) ;
     for (unsigned int i=0; i < n1; i++)
         dat.slice(i) = x1.slice(i) - M.slice(0) ;
-        
+
     for (unsigned int i=0; i < n2; i++)
         dat.slice(n1+i) = x2.slice(i) - M.slice(1) ;
 

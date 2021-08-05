@@ -2,7 +2,7 @@
 title: "A Portmanteau Local Feature Discrimination for High-Dimensional Matrix-Variate Data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{A Portmanteau Local Feature Discrimination for High-Dimensional Matrix-Variate Data}
+  %\VignetteIndexEntry{PLFD-examples}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,10 +16,11 @@ knitr::opts_chunk$set(
 
 This example applies the `PLFD` to the first set of settings in the original paper. 
 
-```{r PLFD}
+```{r setup}
 rm(list=ls())
-set.seed(2020)
 library(PLFD)
+set.seed(2020)
+
 
 n1 <- n2 <- 75
 rDim <- cDim <- 60

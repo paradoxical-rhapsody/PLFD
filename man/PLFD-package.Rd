@@ -10,7 +10,10 @@ A Portmanteau Local Feature Discrimination Approach to the Classification
 with High-dimensional Matrix-variate Data.
 }
 \description{
-The PLFD first identifies the local discriminant features and their differential structures, then the discriminant rule is constructed by pooling the identified local features together. This method is applicable to high-dimensional matrix-variate data.
+The PLFD in Xu et al (2021) <doi:10.1007/s13171-021-00255-2> first identifies 
+    the local discriminant features and their differential structures, then constructs 
+    the discriminant rule by pooling the identified local features together. This method is 
+    applicable to high-dimensional matrix-variate data.
 }
 \seealso{
 Useful links:

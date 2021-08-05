@@ -94,3 +94,8 @@ print(plfd.model)
 predict(plfd.model, xtest)
 
 }
+\references{
+Z. Xu, S. Luo and Z. Chen. (2021). A Portmanteau Local Feature Discrimination Approach to the
+Classification with High-dimensional Matrix-variate Data. Sankhya A.
+doi:\href{https://doi.org/10.1007/s13171-021-00255-2}{10.1007/s13171-021-00255-2}
+}

@@ -150,15 +150,15 @@ arma::cube cxx_center_data (const arma::cube& x1, const arma::cube& x2, const Lo
     return dat ;
 }
 
-//' @title Inverse of the MLE of Row and Column Covariance Matrices
+//' @title MLE of Row and Column Precision Matrices
 //'
 //' @param x1  See [get_suppSet()].
 //' @param x2  See [get_suppSet()].
-//' @param flag The result returned from [get_suppSet()].
+//' @param flag Matrix returned from [get_suppSet()].
 //'
 //' @return See the value of [cxx_mle()].
 //' @noRd
 // [[Rcpp::export]]
 List cxx_prec (arma::cube x1, arma::cube x2, LogicalMatrix flag) {
-    return cxx_mle(cxx_center_data(x1, x2, flag)) ;
+    return cxx_mle( cxx_center_data(x1, x2, flag) ) ;
 }

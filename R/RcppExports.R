@@ -2,10 +2,11 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' @title Log-Likelihood of Matrix-Variate Normal Data
-#' @description It supposes that the data are independently
-#'   sampled from `N(0, Psi, Sigma)`.
+#' @description \loadmathjax
+#' It supposes that the data are independently from
+#'   \mjeqn{N(0, \Psi, \Sigma)}{`N(0, Psi, Sigma)`}.
 #'
-#' @param x Array of *r x c x n*.
+#' @param x Array.
 #' @param Psi Row convariance matrix.
 #' @param Sig Column covariance matrix.
 #'
@@ -14,10 +15,13 @@
 NULL
 
 #' @title MLE of Row and Column Covariance Matrices
+#' @description \loadmathjax
+#' It supposes that the data are independently from
+#'   \mjeqn{N(0, \Psi, \Sigma)}{`N(0, Psi, Sigma)`}.
 #'
 #' @param x Array.
-#' @param maxIter The maximal number of iterations.
-#' @param tol Error tolerance.
+#' @param maxIter The maximal step of iterations.
+#' @param tol Tolerance.
 #'
 #' @return `list(logLik, Psi, PsiInv, Sig, SigInv)`.
 #' @noRd
@@ -33,8 +37,9 @@ NULL
 #' @noRd
 NULL
 
-#' @title Estimate Mean Matrices of Class 1 and 2
-#' @description If `flag(i, j)` is `FALSE`, `M1(i, j)` and `M2(i, j)` are
+#' @title Mean Matrices
+#' @description \loadmathjax
+#' If `flag(i, j)` is `FALSE`, `M1(i, j)` and `M2(i, j)` are
 #' estimated within groups respectively; otherwise, they are estimated as
 #' the pooled mean value.
 #'
@@ -54,7 +59,7 @@ cxx_mean <- function(x1, x2, flag) {
 #' @param x2  See [get_suppSet()].
 #' @param flag The result returned from [get_suppSet()].
 #'
-#' @return See the value of [cxx_matNormal_mle()].
+#' @return See the value of [cxx_mle()].
 #' @noRd
 cxx_prec <- function(x1, x2, flag) {
     .Call(`_PLFD_cxx_prec`, x1, x2, flag)

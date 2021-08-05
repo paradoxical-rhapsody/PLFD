@@ -1,7 +1,7 @@
-#' @title Identify Sigificant Blocks
+#' @title Identify Feature Blocks
 #' @description \loadmathjax
-#' Identify the blocks whose \mjeqn{T^2}{T^2}-statistics are larger than a
-#'  permutated thresholding.
+#' Identify the blocks whose \mjeqn{T^2}{T^2}-statistic exceeds a
+#'  threshold determined by permutation.
 #' 
 #' @param x1 See [plfd()].
 #' @param x2 See [plfd()].
@@ -11,7 +11,8 @@
 #' @param permNum See [plfd()].
 #' @param alpha See [plfd()].
 #' 
-#' @return List with each component including the index of rows and columns of significant blocks.
+#' @return List with each component including the index of rows and 
+#' columns of feature blocks.
 #' @noRd
 get_feature_blocks <- function (x1, x2, r0, c0, blockList, permNum, alpha) {
     stopifnot(NROW(x2) == NROW(x1))
@@ -21,6 +22,7 @@ get_feature_blocks <- function (x1, x2, r0, c0, blockList, permNum, alpha) {
 	n1 <- dim(x1)[3]
 	n2 <- dim(x2)[3]
 	n  <- n1 + n2
+    
     if (missing(blockList)) blockList <- size2blocks(rDim, cDim, r0, c0)
     
     T2 <- rep(NA_real_, length(blockList))

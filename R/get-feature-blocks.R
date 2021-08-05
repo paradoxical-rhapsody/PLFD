@@ -23,7 +23,8 @@ get_feature_blocks <- function (x1, x2, r0, c0, blockList, permNum, alpha) {
 	n2 <- dim(x2)[3]
 	n  <- n1 + n2
     
-    if (missing(blockList)) blockList <- size2blocks(rDim, cDim, r0, c0)
+    if (missing(blockList)) 
+        blockList <- size2blocks(rDim, cDim, r0, c0)
     
     T2 <- rep(NA_real_, length(blockList))
     for (i in seq(blockList)) {

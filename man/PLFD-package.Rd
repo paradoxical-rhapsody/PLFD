@@ -24,7 +24,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Zengchao Xu \email{xuzengchao@sjtu.edu.cn}
+\strong{Maintainer}: Zengchao Xu \email{zengc.xu@aliyun.com}
 
 Authors:
 \itemize{

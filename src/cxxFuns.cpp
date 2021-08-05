@@ -140,12 +140,11 @@ arma::cube cxx_center_data (const arma::cube& x1, const arma::cube& x2, const Lo
     arma::cube M = cxx_mean(x1, x2, flag) ;
 
     arma::cube dat = arma::zeros(r0, c0, n1+n2) ;
-    for (unsigned int i=0; i < n1; i++) {
+    for (unsigned int i=0; i < n1; i++)
         dat.slice(i) = x1.slice(i) - M.slice(0) ;
-    }
-    for (unsigned int i=0; i < n2; i++) {
+        
+    for (unsigned int i=0; i < n2; i++)
         dat.slice(n1+i) = x2.slice(i) - M.slice(1) ;
-    }
 
     return dat ;
 }

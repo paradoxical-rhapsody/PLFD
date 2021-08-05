@@ -38,16 +38,15 @@ NULL
 NULL
 
 #' @title Mean Matrices
-#' @description \loadmathjax
-#' If `flag(i, j)` is `FALSE`, `M1(i, j)` and `M2(i, j)` are
-#' estimated within groups respectively; otherwise, they are estimated as
+#' @description
+#' If `isTRUE(flag(i, j))`, `M1(i, j)` and `M2(i, j)` are estimated as
 #' the pooled mean value.
 #'
 #' @param x1 See [get_suppSet()].
 #' @param x2 See [get_suppSet()].
-#' @param flag The result returned from [get_suppSet()].
+#' @param flag Logical matrix returned from [get_suppSet()].
 #'
-#' @return Array with two slices.
+#' @return `list(M1, M2)`.
 #' @noRd
 cxx_mean <- function(x1, x2, flag) {
     .Call(`_PLFD_cxx_mean`, x1, x2, flag)

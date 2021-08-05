@@ -12,7 +12,7 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // cxx_mean
-arma::cube cxx_mean(const arma::cube& x1, const arma::cube& x2, const LogicalMatrix& flag);
+List cxx_mean(const arma::cube& x1, const arma::cube& x2, const LogicalMatrix& flag);
 RcppExport SEXP _PLFD_cxx_mean(SEXP x1SEXP, SEXP x2SEXP, SEXP flagSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

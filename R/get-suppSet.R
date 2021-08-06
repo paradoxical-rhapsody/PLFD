@@ -1,61 +1,59 @@
-#' @title Detect the Nonzero Positions of `M1 - M2`
+#' @title Detect Differential Structure
 #' @description \loadmathjax
-#' Three modes are provided for identifying 
-#' \mjeqn{supp(M_1 - M_2)}{supp(M_1 - M_2)}. See details.
+#' Identify \mjeqn{supp(M_1 - M_2)}{supp(M1 - M2)}.
 #' 
 #' @param x1 Array.
-#' @param x2 Array with the same row and column size as `x1`.
+#' @param x2 Array.
 #' @param blockMode See [plfd()].
 #' 
-#' @return Logical matrix with `FALSE` corresponds to the nonzero entry.
+#' @return Logical matrix, wherein the set of `FALSE` corresponds to 
+#'  \mjeqn{supp(M_1 - M_2)}{supp(M1 - M2)}.
 #' @noRd
-get_suppSet <- function (x1, x2, blockMode) {
-    stopifnot(NROW(x2) == NROW(x1))
-    stopifnot(NCOL(x2) == NCOL(x1))
-    stopifnot(blockMode %in% c('dense', 'fd', 'bd', 'forward', 'backward'))
-    if (blockMode == 'forward')  blockMode <- 'fd'
-    if (blockMode == 'backward') blockMode <- 'bd'
+get_suppSet <- function (x1, x2, blockMode=NULL) {
     rDim <- NROW(x1)
     cDim <- NCOL(x1)
     n0 <- dim(x1)[3] + dim(x2)[3]
 
-    if (blockMode == 'dense') {
-        flag <- matrix(FALSE, rDim, cDim)
+    stopifnot( NROW(x2) == rDim )
+    stopifnot( NCOL(x2) == cDim )
+
+    if ( is.null(blockMode) ) {
+        return( matrix(FALSE, rDim, cDim) )
     } else {
-        s0 <- switch(blockMode, 'fd'=TRUE, 'bd'=FALSE)
-        flag <- matrix(s0, rDim, cDim)
-        candidates <- 1:(rDim*cDim)
-        
-        ebic <- eibcOld <- Inf
-        k <- 0
-        while (length(candidates)) {
-            temp <- rep(NA, length(candidates))
-            for (i in 1:length(candidates)) {
-                flag[candidates[i]] <- !s0
-                temp[i] <- cxx_prec(x1, x2, flag)$logLik
-                flag[candidates[i]] <- s0
-            }
-            
-            i0 <- candidates[switch(blockMode, 'fd'=which.max, 'bd'=which.min)(temp)]
-            flag[i0] <- !s0
-            logL <- cxx_prec(x1, x2, flag)$logLik
-            df <- (rDim+cDim)*(rDim+cDim+1)/2 + sum(!flag)
-            ebicOld <- ebic
-            ebic <- -2*logL + df*log(n0) # + (2*ebic.gamma*lchoose(rDim*cDim, k))
-            
-            k <- k + 1
-            if (ebic > ebicOld) {
-                if (k == 2) { 
-                    flag <- matrix(s0, rDim, cDim)
-                } else { 
-                    flag[i0] <- s0
-                }
-                break
-            }
-            
-            candidates <- setdiff(candidates, i0)
-        }
+        stopifnot( blockMode %in% c("fd", "forward") )
     }
+
+    flag <- matrix(TRUE, rDim, cDim)
     
+    logL <- cxx_prec(x1, x2, flag)$logLik
+    df <- (rDim+cDim)*(rDim+cDim+1)/2
+    ebic <- ( -2*logL +  df * log(n0))
+
+    k <- 0
+    candidates <- seq(rDim*cDim)
+    while (length(candidates)) {
+        temp <- rep(NA, length(candidates))
+        for (i in 1:length(candidates)) {
+            flag[candidates[i]] <- FALSE
+            temp[i] <- cxx_prec(x1, x2, flag)$logLik
+            flag[candidates[i]] <- TRUE
+        }
+        
+        i0 <- candidates[which.max(temp)]
+        flag[i0] <- FALSE
+        logL <- cxx_prec(x1, x2, flag)$logLik
+        df <- df + 1
+        tmp <- -2*logL + df*log(n0) # + (2*ebic.gamma*lchoose(rDim*cDim, k))
+        
+        k <- k + 1
+        if (tmp > ebic) {
+            # flag[i0] <- TRUE
+            break
+        }
+        
+        candidates <- setdiff(candidates, i0)
+        ebic <- tmp
+    }
+
     flag
 }

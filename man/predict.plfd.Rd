@@ -4,17 +4,21 @@
 \alias{predict.plfd}
 \title{Predict Method for \code{plfd}}
 \usage{
-\method{predict}{plfd}(object, x, ...)
+\method{predict}{plfd}(object, x, y, ...)
 }
 \arguments{
 \item{object}{\code{plfd} object.}
 
 \item{x}{The samples to be predicted.}
 
+\item{y}{Vector. Labels of x (optional) with value \code{1} or \code{2}.}
+
 \item{...}{Ignored currently.}
 }
 \value{
-Matrix with two columns, including the scores and predicted groups.
+\code{list(W, y.hat, mcr)}, wherein \code{W} refers to the discriminant
+scores, \code{y.hat} refers to the predicted labels and \code{mcr} is the misclassification
+rate when \code{y} is available.
 }
 \description{
 Predict Method for \code{plfd}

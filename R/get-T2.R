@@ -1,14 +1,19 @@
-#' @title Scaled \mjeqn{T^2}{T^2}-statistic
+#' @title \mjeqn{T^2}{T^2} Statistic
 #' @description \loadmathjax
 #' 
 #' @param x1 See [get_suppSet()].
 #' @param x2 See [get_suppSet()].
 #' 
-#' @details The total sample size should be larger than the row size and
+#' @details 
+#' \mjeqn{T^2 = \frac{n_1 n_2}{n} tr [(\hat{M_1} - \hat{M_2})^\top 
+#'  \hat{\Sigma}^{-1} (\hat{M_1} - \hat{M_2}) \hat{Sigma}^{-1} ]}{
+#'   (n1*n2/n) tr[(\hat{M1}-\hat{M2})' \hat{Psi}^{-1} (\hat{M1}-\hat{M2}) \hat{Sigma}^{-1}]
+#' }
+#' The total sample size should be larger than the row size and
 #' column size so that the estimated row and column covariance matrices 
 #' are non-singular.
 #' 
-#' @return The scaled \mjeqn{T^2}{T^2}-statistic.
+#' @return \mjeqn{T^2}{T^2}-statistic.
 #' @noRd
 get_T2 <- function (x1, x2) {
     stopifnot(NROW(x2) == NROW(x1))
@@ -20,7 +25,7 @@ get_T2 <- function (x1, x2) {
     n  <- n1 + n2
 
     M.diff <- apply(x1, 1:2, mean) - apply(x2, 1:2, mean)
-    dim(M.diff) <- c(NROW(x1), NCOL(x1))
+    dim(M.diff) <- c(r0, c0)
     p <- cxx_prec(x1, x2, matrix(FALSE, r0, c0))
 
     # T2 = (n1*n2/n) tr[(M1 - M2)' Sig.inv (M1 - M2) Psi.inv]

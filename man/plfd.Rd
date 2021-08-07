@@ -2,9 +2,7 @@
 % Please edit documentation in R/plfd.R
 \name{plfd}
 \alias{plfd}
-\title{A Portmanteau Local Feature Discrimination
-Approach to the Classification with High-Dimensional
-Matrix-Variate Data}
+\title{PLFD}
 \usage{
 plfd(x1, x2, r0, c0, blockList, blockMode = NULL, permNum = 100, alpha = 0)
 }
@@ -40,6 +38,8 @@ matrix where the first column is scores and the second column is predicted group
 }
 \description{
 \loadmathjax
+A portmanteau local feature discrimination (PLFD) approach to the classification with
+high-dimensional matrix-variate data.
 }
 \details{
 There are two ways to specify the blocks under consideration. In the case that

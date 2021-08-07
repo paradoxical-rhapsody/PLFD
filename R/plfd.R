@@ -1,7 +1,7 @@
-#' @title A Portmanteau Local Feature Discrimination 
-#'  Approach to the Classification with High-Dimensional 
-#' Matrix-Variate Data
+#' @title PLFD
 #' @description \loadmathjax
+#' A portmanteau local feature discrimination (PLFD) approach to the classification with
+#' high-dimensional matrix-variate data.
 #' 
 #' @param x1 Array of \mjeqn{r \times c \times n_1}{r*c*n1}, samples from group 1.
 #' @param x2 Array of \mjeqn{r \times c \times n_2}{r*c*n2}, samples from group 2.

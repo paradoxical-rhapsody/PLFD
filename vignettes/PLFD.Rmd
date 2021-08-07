@@ -43,6 +43,8 @@ dim(xTest) <- c(rDim, cDim, n1Test+n2Test)
 yTest <- c(rep(1, n1Test), rep(2, n2Test))
 
 r0 <- c0 <- 5
-plfd.model <- plfd(x1, x2, r0, c0, xtest=xTest, ytest=yTest)
+plfd.model <- plfd(x1, x2, r0, c0)
 print(plfd.model)
+
+predict(plfd.model, x=xTest, y=yTest)
 ```

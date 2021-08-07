@@ -28,7 +28,7 @@ predict.plfd <- function(object, x, y, ...) {
     y.hat=ifelse(W>0, 1, 2)
     result <- list(score=W, y.hat=y.hat)
 
-    if (!is.missing(y)) {
+    if (!missing(y)) {
       stopifnot( n == length(y) ) 
       stopifnot( all(unique(y) %in%  1:2) )
       result["mcr"] = sum(y.hat != y) / n

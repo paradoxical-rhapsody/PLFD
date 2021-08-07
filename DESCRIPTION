@@ -7,7 +7,7 @@ Authors@R: c(
     person("Zengchao", "Xu", role = c("aut", "cre"), email = "zengc.xu@aliyun.com"),
     person("Shan", "Luo",    role="aut"),
     person("Zehua", "Chen",  role="aut"))
-Maintainer: Zengchao Xu <xuzengchao@sjtu.edu.cn>
+Maintainer: Zengchao Xu <zengc.xu@aliyun.com>
 Description: The PLFD in Xu etal (2021) <doi:10.1007/s13171-021-00255-2> first identifies 
     the local discriminant features and their differential structures, then constructs 
     the discriminant rule by pooling the identified local features together. This method is 

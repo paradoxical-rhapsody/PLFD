@@ -5,8 +5,6 @@
 #' 
 #' @param x1 See [plfd()].
 #' @param x2 See [plfd()].
-#' @param r0 See [plfd()].
-#' @param c0 See [plfd()].
 #' @param blockList See [plfd()].
 #' @param permNum See [plfd()].
 #' @param alpha See [plfd()].
@@ -14,7 +12,7 @@
 #' @return List with each component including the index of rows and 
 #' columns of feature blocks.
 #' @noRd
-get_feature_blocks <- function (x1, x2, r0, c0, blockList, permNum, alpha) {
+get_feature_blocks <- function (x1, x2, blockList, permNum, alpha) {
     stopifnot(NROW(x2) == NROW(x1))
     stopifnot(NCOL(x2) == NCOL(x1))
 	rDim <- NROW(x1)
@@ -22,9 +20,6 @@ get_feature_blocks <- function (x1, x2, r0, c0, blockList, permNum, alpha) {
 	n1 <- dim(x1)[3]
 	n2 <- dim(x2)[3]
 	n  <- n1 + n2
-    
-    if (missing(blockList)) 
-        blockList <- size2blocks(rDim, cDim, r0, c0)
     
     T2 <- rep(NA_real_, length(blockList))
     for (i in seq(blockList)) {

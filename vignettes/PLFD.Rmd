@@ -14,12 +14,13 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Simulation for PLFD 
 This example applies the `PLFD` to the first set of settings in the original paper. 
 
 ```{r setup}
 rm(list=ls())
 library(PLFD)
-set.seed(2020)
+set.seed(2021)
 
 
 n1 <- n2 <- 75
@@ -46,5 +47,6 @@ r0 <- c0 <- 5
 plfd.model <- plfd(x1, x2, r0, c0)
 print(plfd.model)
 
-predict(plfd.model, x=xTest, y=yTest)
+result <- predict(plfd.model, x=xTest, y=yTest)
+print(result$mcr)
 ```

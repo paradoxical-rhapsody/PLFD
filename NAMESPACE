@@ -3,6 +3,7 @@
 S3method(predict,plfd)
 S3method(print,plfd)
 export(plfd)
+import(mathjaxr)
 importFrom(Rcpp,evalCpp)
 importFrom(stats,predict)
 importFrom(stats,quantile)

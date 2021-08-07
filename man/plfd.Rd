@@ -72,7 +72,7 @@ blockList <- list(list(rIdx=1:5, cIdx=1:5),
 print( plfd.model <- plfd(x1, x2, blockList=blockList) )
 
 ## Predict
-predict(plfd.model, xtest)
+predict(plfd.model, xtest, ytest)
 
 }
 \references{

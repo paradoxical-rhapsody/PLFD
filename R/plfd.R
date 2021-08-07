@@ -56,7 +56,7 @@
 #' print( plfd.model <- plfd(x1, x2, blockList=blockList) )
 #' 
 #' ## Predict
-#' predict(plfd.model, xtest)
+#' predict(plfd.model, xtest, ytest)
 #' 
 #' @references 
 #' Z. Xu, S. Luo and Z. Chen. (2021). A Portmanteau Local Feature Discrimination Approach to the 
@@ -83,23 +83,6 @@ plfd <- function(x1, x2, r0, c0, blockList, blockMode=NULL, permNum=100, alpha=0
     featureBlocks <- get_feature_blocks(x1, x2, blockList, permNum, alpha)
     paras <- get_paras(x1, x2, featureBlocks, blockMode)
     plfd.model[['paras']] <- paras
-    
-    # y <- rbind(predict(plfd.model, x1), predict(plfd.model, x2))
-    # rownames(y) <- c(paste0('y1-', 1:n1), paste0('y2-', 1:n2))
-    # plfd.model[['y']] <- y
-    # plfd.model[['mcr']] <- sum(y[, 'group'] != c(rep(1, n1), rep(2, n2))) / n
-    
-    # if (!missing(xtest)) {
-    #     if (is.matrix(xtest)) dim(xtest) <- c(NROW(xtest), NCOL(xtest), 1)
-    #     stopifnot(NROW(xtest) == NROW(x1))
-    #     stopifnot(NCOL(xtest) == NCOL(x1))
-    #     ytest.hat <- predict(plfd.model, xtest)
-    #     plfd.model[['ytest.hat']] <- ytest.hat
-    # }
-    # if (!missing(ytest) && !missing(xtest)) {
-    #     stopifnot(length(ytest) == dim(xtest)[3])
-    #     plfd.model[['mcr.test']] <- sum(ytest.hat[, 'group'] != ytest) / length(ytest)
-    # }
     
     return(plfd.model)
 }

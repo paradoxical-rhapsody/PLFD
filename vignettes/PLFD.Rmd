@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 # Simulation for PLFD 
-This example applies the `PLFD` to the first set of settings in the original paper. 
+
 
 ```{r setup}
 rm(list=ls())

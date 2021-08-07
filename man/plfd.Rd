@@ -3,50 +3,32 @@
 \name{plfd}
 \alias{plfd}
 \title{A Portmanteau Local Feature Discrimination
-Approach to the Classification with High-dimensional
-Matrix-variate Data.}
+Approach to the Classification with High-Dimensional
+Matrix-Variate Data}
 \usage{
-plfd(
-  x1,
-  x2,
-  r0,
-  c0,
-  blockList,
-  blockMode = "dense",
-  xtest,
-  ytest,
-  permNum = 100,
-  alpha = 0
-)
+plfd(x1, x2, r0, c0, blockList, blockMode = NULL, permNum = 100, alpha = 0)
 }
 \arguments{
 \item{x1}{Array of \mjeqn{r \times c \times n_1}{r\emph{c}n1}, samples from group 1.}
 
 \item{x2}{Array of \mjeqn{r \times c \times n_2}{r\emph{c}n2}, samples from group 2.}
 
-\item{r0, c0}{The common row size and column size of blocks. See details.}
+\item{r0, c0}{Row and column size of blocks. See details.}
 
-\item{blockList}{List including the index of considered blocks. Optional if \code{r0} and
-\code{c0} are provided. See details.}
+\item{blockList}{List including the index set of pre-specified blocks. See details.}
 
-\item{blockMode}{How the nonzero positions of \code{M1-M2} are detected.
-Three modes are provided: \code{"dense"}(default), \code{"fd"/"forward"} and \code{"bd"/"backward"}.
-The \code{blockMode=="dense"} supposes that \code{M1 - M2} has no zero entry.
-If \code{blockMode=="fd"} or \code{"bd"}, the nonzero positions are detected by
-forward/backward step, where \emph{BIC} serves as the stopping rule.}
+\item{blockMode}{How the differential structure of \code{M1-M2} are detected.
+The default (\code{blockMode=NULL}) does NOT detect the structure of feature blocks.
+If \code{blockMode="fd"}(or \code{"forward"}), a forward stepwise procedure is conducted to
+detect the nonzero positions of feature blocks, wherein BIC serves as the stopping rule.}
 
-\item{xtest}{(Optional) New samples to be predicted.}
+\item{permNum}{Round of permutation.}
 
-\item{ytest}{(Optional) Vector with of \mjeqn{1,2}{1,2} entries corresponds to
-labels of \code{xtest}.}
-
-\item{permNum}{The number of permutation (default=100).}
-
-\item{alpha}{The upper alpha` quantile of the permutation statistics (default=0).}
+\item{alpha}{The upper-\mjeqn{\alpha}{alpha} quantile of the permutation statistic.}
 }
 \value{
 List, \itemize{
-\item \code{paras} List including the parameters of significant blocks.
+\item \code{paras} List of the parameters of feature blocks.
 \item \code{y} Self-predicted results for training data. It is a matrix of
 \mjeqn{(n_1+n_2)\times 2}{(n1+n2)*2}, the first column is the
 scores and the second column is the predicted labels.
@@ -58,39 +40,36 @@ matrix where the first column is scores and the second column is predicted group
 }
 \description{
 \loadmathjax
-Matrix linear discriminant analysis.
 }
 \details{
-There are two manners to specify the blocks under consideration. In the case that
-the matrix-variate is partition into non-overlapping blocks that share the common row size and
-column size, these sizes can be specified by \code{r0} and \code{c0}. Otherwise, the
-blocks can be flexibly specified by \code{blockList}, which should be a list that each
-component includes \code{rIdx} and \code{cIdx} corresponding to the rows index and columns
-index of a submatrix-variate. See examples.
+There are two ways to specify the blocks under consideration. In the case that
+the matrix-variate is partition into non-overlapping blocks that share the common
+row size and column size, these sizes can be specified by \code{r0} and \code{c0}. Otherwise, the
+blocks can be flexibly specified by parameter \code{blockList}, which should be a list in
+which each element includes \code{rIdx} and \code{cIdx} corresponding to the row and column index
+set of a block. See examples.
 }
 \examples{
-## Simulate the data of small dimension and sample size for saving time
 set.seed(2020)
 rDim <- 20
 cDim <- 20
+
 n1 <- n2 <- 50
-ntest <- 50
 x1 <- array(rnorm(rDim*cDim*n1, mean=0.0), dim=c(rDim, cDim, n1))
 x2 <- array(rnorm(rDim*cDim*n2, mean=1.0), dim=c(rDim, cDim, n2))
+
+ntest <- 50
 xtest <- array(rnorm(rDim*cDim*ntest, mean=1.0), dim=c(rDim, cDim, ntest))
 ytest <- rep(2, ntest)
 
 ## Uniform partition
-(result <- plfd(x1, x2, r0=5, c0=5, blockMode='dense', xtest=xtest, ytest=ytest))
+print( plfd(x1, x2, r0=5, c0=5) )
 
 ## Pre-specify feature blocks
 blockList <- list(list(rIdx=1:5, cIdx=1:5), 
                   list(rIdx=6:10, cIdx=1:5), 
                   list(rIdx=3:9, cIdx=2:8))
-(plfd.model <- plfd(x1, x2, blockList=blockList, blockMode='dense', xtest=xtest, ytest=ytest))
-
-## print
-print(plfd.model)
+print( plfd.model <- plfd(x1, x2, blockList=blockList) )
 
 ## Predict
 predict(plfd.model, xtest)

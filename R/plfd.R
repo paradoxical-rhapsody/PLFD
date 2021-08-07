@@ -1,35 +1,29 @@
 #' @title A Portmanteau Local Feature Discrimination 
-#'  Approach to the Classification with High-dimensional 
-#' Matrix-variate Data.
+#'  Approach to the Classification with High-Dimensional 
+#' Matrix-Variate Data
 #' @description \loadmathjax
-#' Matrix linear discriminant analysis.
 #' 
 #' @param x1 Array of \mjeqn{r \times c \times n_1}{r*c*n1}, samples from group 1.
 #' @param x2 Array of \mjeqn{r \times c \times n_2}{r*c*n2}, samples from group 2.
-#' @param r0,c0 The common row size and column size of blocks. See details.
-#' @param blockList List including the index of considered blocks. Optional if `r0` and
-#' `c0` are provided. See details.
-#' @param blockMode How the nonzero positions of `M1-M2` are detected.
-#' Three modes are provided: `"dense"`(default), `"fd"/"forward"` and `"bd"/"backward"`. 
-#' The `blockMode=="dense"` supposes that `M1 - M2` has no zero entry. 
-#' If `blockMode=="fd"` or `"bd"`, the nonzero positions are detected by 
-#' forward/backward step, where *BIC* serves as the stopping rule.
-#' @param xtest (Optional) New samples to be predicted.
-#' @param ytest (Optional) Vector with of \mjeqn{1,2}{1,2} entries corresponds to 
-#'  labels of `xtest`.
-#' @param permNum The number of permutation (default=100).
-#' @param alpha The upper alpha` quantile of the permutation statistics (default=0). 
+#' @param r0,c0 Row and column size of blocks. See details.
+#' @param blockList List including the index set of pre-specified blocks. See details.
+#' @param blockMode How the differential structure of `M1-M2` are detected.
+#' The default (`blockMode=NULL`) does NOT detect the structure of feature blocks. 
+#' If `blockMode="fd"`(or `"forward"`), a forward stepwise procedure is conducted to
+#' detect the nonzero positions of feature blocks, wherein BIC serves as the stopping rule.
+#' @param permNum Round of permutation.
+#' @param alpha The upper-\mjeqn{\alpha}{alpha} quantile of the permutation statistic. 
 #' 
 #' @details 
-#' There are two manners to specify the blocks under consideration. In the case that 
-#' the matrix-variate is partition into non-overlapping blocks that share the common row size and
-#' column size, these sizes can be specified by `r0` and `c0`. Otherwise, the 
-#' blocks can be flexibly specified by `blockList`, which should be a list that each 
-#' component includes `rIdx` and `cIdx` corresponding to the rows index and columns 
-#' index of a submatrix-variate. See examples.
+#' There are two ways to specify the blocks under consideration. In the case that 
+#' the matrix-variate is partition into non-overlapping blocks that share the common 
+#' row size and column size, these sizes can be specified by `r0` and `c0`. Otherwise, the 
+#' blocks can be flexibly specified by parameter `blockList`, which should be a list in
+#' which each element includes `rIdx` and `cIdx` corresponding to the row and column index 
+#' set of a block. See examples.
 #' 
 #' @return List, \itemize{
-#'  \item `paras` List including the parameters of significant blocks.
+#'  \item `paras` List of the parameters of feature blocks.
 #'  \item `y` Self-predicted results for training data. It is a matrix of 
 #'      \mjeqn{(n_1+n_2)\times 2}{(n1+n2)*2}, the first column is the 
 #'      scores and the second column is the predicted labels.
@@ -40,28 +34,26 @@
 #' }
 #' 
 #' @examples
-#' ## Simulate the data of small dimension and sample size for saving time
 #' set.seed(2020)
 #' rDim <- 20
 #' cDim <- 20
+#' 
 #' n1 <- n2 <- 50
-#' ntest <- 50
 #' x1 <- array(rnorm(rDim*cDim*n1, mean=0.0), dim=c(rDim, cDim, n1))
 #' x2 <- array(rnorm(rDim*cDim*n2, mean=1.0), dim=c(rDim, cDim, n2))
+#'
+#' ntest <- 50
 #' xtest <- array(rnorm(rDim*cDim*ntest, mean=1.0), dim=c(rDim, cDim, ntest))
 #' ytest <- rep(2, ntest)
 #' 
 #' ## Uniform partition
-#' (result <- plfd(x1, x2, r0=5, c0=5, blockMode='dense', xtest=xtest, ytest=ytest))
+#' print( plfd(x1, x2, r0=5, c0=5) )
 #' 
 #' ## Pre-specify feature blocks
 #' blockList <- list(list(rIdx=1:5, cIdx=1:5), 
 #'                   list(rIdx=6:10, cIdx=1:5), 
 #'                   list(rIdx=3:9, cIdx=2:8))
-#' (plfd.model <- plfd(x1, x2, blockList=blockList, blockMode='dense', xtest=xtest, ytest=ytest))
-#' 
-#' ## print
-#' print(plfd.model)
+#' print( plfd.model <- plfd(x1, x2, blockList=blockList) )
 #' 
 #' ## Predict
 #' predict(plfd.model, xtest)
@@ -73,7 +65,7 @@
 #' 
 #' @importFrom stats quantile predict
 #' @export 
-plfd <- function(x1, x2, r0, c0, blockList, blockMode='dense', xtest, ytest, permNum=100, alpha=0.0) {
+plfd <- function(x1, x2, r0, c0, blockList, blockMode=NULL, permNum=100, alpha=0.0) {
     stopifnot(NROW(x1) == NROW(x2))
     stopifnot(NCOL(x1) == NCOL(x2))
     rDim <- NROW(x1)
@@ -81,11 +73,12 @@ plfd <- function(x1, x2, r0, c0, blockList, blockMode='dense', xtest, ytest, per
     n1 <- dim(x1)[3]
     n2 <- dim(x2)[3]
     n  <- n1 + n2
-    plfd.model <- list(n1=n1, n2=n2, rDim=rDim, cDim=cDim, blockMode=blockMode, permNum=permNum, alpha=alpha)
+    plfd.model <- list(n1=n1, n2=n2, rDim=rDim, cDim=cDim, 
+                    blockMode=blockMode, permNum=permNum, alpha=alpha)
     class(plfd.model) <- 'plfd'
     
     if (missing(blockList)) blockList <- size2blocks(rDim, cDim, r0, c0)
-    plfd.model[['totalBlockNum']] <- length(blockList)
+    plfd.model[['BlockNumber']] <- length(blockList)
 
     sigBlockList <- get_feature_blocks(x1, x2, r0, c0, blockList, permNum, alpha)
     paras <- get_paras(x1, x2, sigBlockList, blockMode)

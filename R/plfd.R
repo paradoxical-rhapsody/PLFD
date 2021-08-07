@@ -1,4 +1,6 @@
-#' @title Matrix-variate Linear Discriminant Analysis
+#' @title A Portmanteau Local Feature Discrimination 
+#'  Approach to the Classification with High-dimensional 
+#' Matrix-variate Data.
 #' @description \loadmathjax
 #' Matrix linear discriminant analysis.
 #' 

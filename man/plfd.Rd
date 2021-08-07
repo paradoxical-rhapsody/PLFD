@@ -2,7 +2,9 @@
 % Please edit documentation in R/plfd.R
 \name{plfd}
 \alias{plfd}
-\title{Matrix-variate Linear Discriminant Analysis}
+\title{A Portmanteau Local Feature Discrimination
+Approach to the Classification with High-dimensional
+Matrix-variate Data.}
 \usage{
 plfd(
   x1,

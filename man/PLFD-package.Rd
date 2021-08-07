@@ -5,10 +5,6 @@
 \alias{PLFD}
 \alias{PLFD-package}
 \title{PLFD: Portmanteau Local Feature Discrimination for Matrix-Variate Data}
-\source{
-A Portmanteau Local Feature Discrimination Approach to the Classification
-with High-dimensional Matrix-variate Data.
-}
 \description{
 The PLFD in Xu et al (2021) <doi:10.1007/s13171-021-00255-2> first identifies 
     the local discriminant features and their differential structures, then constructs 

@@ -11,7 +11,7 @@
 
 \item{x}{The samples to be predicted.}
 
-\item{y}{Vector. Labels of x (optional) with value \code{1} or \code{2}.}
+\item{y}{Vector (optional). Labels of x with value \code{1} or \code{2}.}
 
 \item{...}{Ignored currently.}
 }

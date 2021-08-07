@@ -2,7 +2,7 @@
 #' 
 #' @param object `plfd` object.
 #' @param x The samples to be predicted.
-#' @param y Vector. Labels of x (optional) with value `1` or `2`.
+#' @param y Vector (optional). Labels of x with value `1` or `2`.
 #' @param ... Ignored currently.
 #' 
 #' @return `list(W, y.hat, mcr)`, wherein `W` refers to the discriminant 

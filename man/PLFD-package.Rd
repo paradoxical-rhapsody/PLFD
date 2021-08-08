@@ -6,10 +6,11 @@
 \alias{PLFD-package}
 \title{PLFD: Portmanteau Local Feature Discrimination for Matrix-Variate Data}
 \description{
-The PLFD in first identifies the local discriminant features and their 
-    differential structures, then constructs the discriminant rule by pooling 
-    the identified local features together. This method is applicable to 
-    high-dimensional matrix-variate data.
+The portmanteau local feature discriminant approach first identifies 
+    the local discriminant features and their differential structures, 
+    then constructs the discriminant rule by pooling the identified local
+    features together. This method is applicable to high-dimensional 
+    matrix-variate data.
 }
 \seealso{
 Useful links:

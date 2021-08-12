@@ -23,14 +23,10 @@
 #' set of a block. See examples.
 #' 
 #' @return List, \itemize{
-#'  \item `paras` List of the parameters of feature blocks.
-#'  \item `y` Self-predicted results for training data. It is a matrix of 
-#'      \mjeqn{(n_1+n_2)\times 2}{(n1+n2)*2}, the first column is the 
-#'      scores and the second column is the predicted labels.
-#'  \item `mcr` The self-predicted misclassification rate for training samples.
-#'  \item `ytest.hat` The predicted result for `xtest` if it is provided. It is a
-#'        matrix where the first column is scores and the second column is predicted group.
-#'  \item `mcr.test` The misclassification rate for `xtest` if `ytest` is provided.
+#'  \item `n1`, `n2`, `rDim`, `cDim`, `blockMode`, `permNum`, `alpha`;
+#'  \item `blockNumber`: the number of identified feature blocks.
+#'  \item `paras`: `list(list(rIdx, cIdx, B, M), ...)`, list of the information of 
+#'  feature blocks.
 #' }
 #' 
 #' @examples

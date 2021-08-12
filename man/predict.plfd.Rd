@@ -21,6 +21,7 @@
 \item \code{y.hat}: predicted labels;
 \item \code{mcr}: misclassification rate if parameter \code{y} is available.
 }
+}
 \description{
 Predict Method for \code{plfd}
 }

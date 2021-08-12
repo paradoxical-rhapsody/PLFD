@@ -9,6 +9,7 @@
 #'  \item `W`: discriminant scores;
 #'  \item `y.hat`: predicted labels;
 #'  \item `mcr`: misclassification rate if parameter `y` is available.
+#' }
 #' @export 
 predict.plfd <- function(object, x, y, ...) {
     stopifnot( object$rDim == NROW(x) )

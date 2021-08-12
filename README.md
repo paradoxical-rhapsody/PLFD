@@ -11,16 +11,9 @@ Install from [CRAN](https://cran.r-project.org/):
 install.packages("PLFD")
 ```
 
-Install from source:
-
-```R
-library(remotes)
-install_git("https://gitee.com/xu-zc/PLFD.git", build_vignettes=TRUE)
-```
-
 ## Usage
 
-See the vignettes after installation.
+See the examples and vignette.
 
 ## Reference
 

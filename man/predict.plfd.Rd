@@ -9,16 +9,17 @@
 \arguments{
 \item{object}{\code{plfd} object.}
 
-\item{x}{The samples to be predicted.}
+\item{x}{Array, matrix-variate data to be predicted.}
 
-\item{y}{Vector (optional). Labels of x with value \code{1} or \code{2}.}
+\item{y}{Vector (optional), Labels of \code{x} with value \code{1} or \code{2}.}
 
 \item{...}{Ignored currently.}
 }
 \value{
-\code{list(W, y.hat, mcr)}, wherein \code{W} refers to the discriminant
-scores, \code{y.hat} refers to the predicted labels and \code{mcr} is the misclassification
-rate when \code{y} is available.
+\code{list(W, y.hat, mcr)}, \itemize{
+\item \code{W}: discriminant scores;
+\item \code{y.hat}: predicted labels;
+\item \code{mcr}: misclassification rate if parameter \code{y} is available.
 }
 \description{
 Predict Method for \code{plfd}

@@ -7,10 +7,11 @@
 #' @param x2 Array of \mjeqn{r \times c \times n_2}{r*c*n2}, samples from group 2.
 #' @param r0,c0 Row and column size of blocks. See details.
 #' @param blockList List including the index set of pre-specified blocks. See details.
-#' @param blockMode How the differential structure of `M1-M2` are detected.
-#' The default (`blockMode=NULL`) does NOT detect the structure of feature blocks. 
-#' If `blockMode="fd"`(or `"forward"`), a forward stepwise procedure is conducted to
-#' detect the nonzero positions of feature blocks, wherein BIC serves as the stopping rule.
+#' @param blockMode How the differential structure of \mjeqn{M_1 - M_2}{M1-M2} are 
+#' detected. The default (`blockMode=NULL`) does NOT detect the structure of feature 
+#' blocks. If `blockMode="fd"`(or `"forward"`), a forward stepwise procedure is 
+#' conducted to detect the nonzero positions of feature blocks, wherein BIC serves 
+#' as the stopping rule.
 #' @param permNum Round of permutation.
 #' @param alpha The upper-\mjeqn{\alpha}{alpha} quantile of the permutation statistic. 
 #' 

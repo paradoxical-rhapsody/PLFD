@@ -27,7 +27,7 @@ predict.plfd <- function(object, x, y, ...) {
       W <- W + apply(x[rIdx, cIdx, , drop=FALSE], 3, function(.) sum((.-M) * B))
     }
 
-    y.hat=ifelse(W>0, 1, 2)
+    y.hat <- ifelse(W>0, 1, 2)
     result <- list(score=W, y.hat=y.hat)
 
     if (!missing(y)) {

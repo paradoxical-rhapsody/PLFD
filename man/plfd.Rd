@@ -15,10 +15,11 @@ plfd(x1, x2, r0, c0, blockList, blockMode = NULL, permNum = 100, alpha = 0)
 
 \item{blockList}{List including the index set of pre-specified blocks. See details.}
 
-\item{blockMode}{How the differential structure of \code{M1-M2} are detected.
-The default (\code{blockMode=NULL}) does NOT detect the structure of feature blocks.
-If \code{blockMode="fd"}(or \code{"forward"}), a forward stepwise procedure is conducted to
-detect the nonzero positions of feature blocks, wherein BIC serves as the stopping rule.}
+\item{blockMode}{How the differential structure of \mjeqn{M_1 - M_2}{M1-M2} are
+detected. The default (\code{blockMode=NULL}) does NOT detect the structure of feature
+blocks. If \code{blockMode="fd"}(or \code{"forward"}), a forward stepwise procedure is
+conducted to detect the nonzero positions of feature blocks, wherein BIC serves
+as the stopping rule.}
 
 \item{permNum}{Round of permutation.}
 

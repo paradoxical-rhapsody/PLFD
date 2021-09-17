@@ -14,14 +14,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Simulation for PLFD 
+# An example for PLFD 
 
 
 ```{r setup}
 rm(list=ls())
 library(PLFD)
 set.seed(2021)
-
 
 n1 <- n2 <- 75
 rDim <- cDim <- 60

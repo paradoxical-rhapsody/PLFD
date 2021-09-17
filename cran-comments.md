@@ -7,4 +7,6 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a new release.
+* Small patch in light of planned Rcpp change (https://github.com/RcppCore/Rcpp/issues/1158).
+
+* This release update help documentation.

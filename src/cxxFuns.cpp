@@ -31,7 +31,7 @@ double cxx_logLik(const arma::cube & x, const arma::mat & Psi, const arma::mat &
     arma::log_det(d1, temp, Psi) ;
     arma::log_det(d2, temp, Sig) ;
 
-    return -0.5*(n0*r0*c0*log(2*PI) + n0*c0*d1 + n0*r0*d2 + logTr) ;
+    return -0.5*(n0*r0*c0*log(2*M_PI) + n0*c0*d1 + n0*r0*d2 + logTr) ;
 }
 
 //' @title MLE of Row and Column Covariance Matrices

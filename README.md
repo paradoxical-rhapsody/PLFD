@@ -13,7 +13,7 @@
 ## From CRAN
 install.packages("PLFD")
 
-## From git
+## From source
 library(remotes)
 install_git("https://gitee.com/xu-zc/PLFD.git")
 ```

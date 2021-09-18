@@ -1,8 +1,8 @@
 Package: PLFD
 Type: Package
 Title: Portmanteau Local Feature Discrimination for Matrix-Variate Data
-Version: 0.1.1
-Date: 2021-09-17
+Version: 0.1.2
+Date: 2021-09-18
 Authors@R: c(
     person("Zengchao", "Xu", role = c("aut", "cre"), email = "zengc.xu@aliyun.com"),
     person("Shan", "Luo",    role="aut"),

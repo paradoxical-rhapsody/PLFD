@@ -1,5 +1,5 @@
 ---
-title: "A Portmanteau Local Feature Discrimination for High-Dimensional Matrix-Variate Data"
+title: "An example for PLFD "
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{PLFD-examples}
@@ -13,8 +13,6 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-# An example for PLFD 
 
 
 ```{r setup}

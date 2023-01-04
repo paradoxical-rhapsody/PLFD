@@ -4,12 +4,10 @@ using namespace Rcpp;
 
 //' @title Log-Likelihood of Matrix-Variate Normal Data
 //' @description \loadmathjax
-//' It supposes that the data are independently from
-//'   \mjeqn{N(0, \Psi, \Sigma)}{`N(0, Psi, Sigma)`}.
+//' Log-likelihood of i.i.d data from \mjeqn{N(0, \Psi, \Sigma)}{N(0, Psi, Sigma)}.
 //'
 //' @param x Array.
-//' @param Psi Row convariance matrix.
-//' @param Sig Column covariance matrix.
+//' @param Psi,Sig Row and column convariance matrice.
 //'
 //' @return Log-likelihood value.
 //' @noRd
@@ -34,16 +32,17 @@ double cxx_logLik(const arma::cube & x, const arma::mat & Psi, const arma::mat &
     return -0.5*(n0*r0*c0*log(2*M_PI) + n0*c0*d1 + n0*r0*d2 + logTr) ;
 }
 
+
 //' @title MLE of Row and Column Covariance Matrices
 //' @description \loadmathjax
-//' It supposes that the data are independently from
-//'   \mjeqn{N(0, \Psi, \Sigma)}{`N(0, Psi, Sigma)`}.
+//' It supposes the data are sampled independently from
+//'   \mjeqn{N(0, \Psi, \Sigma)}{N(0, Psi, Sigma)}.
 //'
 //' @param x Array.
-//' @param maxIter The maximal step of iterations.
+//' @param maxIter Maximal step of iterations.
 //' @param tol Tolerance.
 //'
-//' @return `list(logLik, Psi, PsiInv, Sig, SigInv)`.
+//' @return `list(Psi, PsiInv, Sig, SigInv, logLik)`.
 //' @noRd
 List cxx_mle(const arma::cube & x, unsigned int maxIter=100, double tol=1.0e-8){
     unsigned int r0 = x.n_rows ;
@@ -77,11 +76,12 @@ List cxx_mle(const arma::cube & x, unsigned int maxIter=100, double tol=1.0e-8){
     }
 
     return Rcpp::List::create(
-        ::Named("logLik")=logLik,
         ::Named("Psi")=Psi, ::Named("PsiInv") = PsiInv, 
-        ::Named("Sig")=Sig, ::Named("SigInv") = SigInv
+        ::Named("Sig")=Sig, ::Named("SigInv") = SigInv,
+        ::Named("logLik")=logLik
     ) ;
 }
+ 
  
 //' @title Mean Matrices
 //' @description

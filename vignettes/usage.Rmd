@@ -1,0 +1,47 @@
+---
+title: "A Synthetic Example for PLFD"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{PLFD-examples}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r setup}
+rm(list=ls())
+library(PLFD)
+set.seed(2022)
+
+rDim <- 45
+cDim <- 35
+n1 <- 80
+n2 <- 75
+n1Test <- 800
+n2Test <- 900
+
+M1 <- matrix(0.0, rDim, cDim)
+M1[1:10, 1:10] <- runif(100, 0.2, 0.8) * sample(-1:1, 100, TRUE, rep(1/3, 3))
+
+x1 <- sweep(array(rnorm(rDim*cDim*n1), c(rDim, cDim, n1)), 1:2, M1, '+')
+x2 <- array(rnorm(rDim*cDim*n2), c(rDim, cDim, n2))
+
+yTest <- c(rep(1, n1Test), rep(2, n2Test))
+xTest <- array(rnorm(rDim*cDim*(n1Test+n2Test)), c(rDim, cDim, n1Test+n2Test))
+xTest[, , 1:n1Test] <- sweep(xTest[, , 1:n1Test], 1:2, M1, '+')
+stopifnot( dim(xTest) == c(rDim, cDim, n1Test+n2Test) )
+
+r0 <- c0 <- 5
+plfd.model <- plfd(x1, x2, r0, c0)
+print(plfd.model)
+
+result <- predict(plfd.model, x=xTest, y=yTest)
+print(result$mcr)
+```

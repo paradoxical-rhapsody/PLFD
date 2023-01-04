@@ -1,19 +1,19 @@
-#' @title \mjeqn{T^2}{T^2} Statistic
+#' @title \mjsdeqn{T^2}-Statistic
 #' @description \loadmathjax
 #' 
 #' @param x1 See [get_suppSet()].
 #' @param x2 See [get_suppSet()].
 #' 
 #' @details 
-#' \mjeqn{T^2 = \frac{n_1 n_2}{n} tr [(\hat{M_1} - \hat{M_2})^\top 
-#'  \hat{\Sigma}^{-1} (\hat{M_1} - \hat{M_2}) \hat{Sigma}^{-1} ]}{
-#'   (n1*n2/n) tr[(\hat{M1}-\hat{M2})' \hat{Psi}^{-1} (\hat{M1}-\hat{M2}) \hat{Sigma}^{-1}]
-#' }
+#' \mjsdeqn{T^2 = \frac{n_1 n_2}{n} tr [(\hat{M_1} - \hat{M_2})^\top 
+#'  \hat{\Sigma}^{-1} (\hat{M_1} - \hat{M_2}) \hat{Sigma}^{-1} ]}
+#' 
 #' The total sample size should be larger than the row size and
 #' column size so that the estimated row and column covariance matrices 
 #' are non-singular.
 #' 
-#' @return \mjeqn{T^2}{T^2}-statistic.
+#' @return \mjsdeqn{T^2}-statistic.
+#' 
 #' @noRd
 get_T2 <- function (x1, x2) {
     stopifnot(NROW(x2) == NROW(x1))

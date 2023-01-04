@@ -3,17 +3,17 @@
 #' A portmanteau local feature discrimination (PLFD) approach to the classification with
 #' high-dimensional matrix-variate data.
 #' 
-#' @param x1 Array of \mjeqn{r \times c \times n_1}{r*c*n1}, samples from group 1.
-#' @param x2 Array of \mjeqn{r \times c \times n_2}{r*c*n2}, samples from group 2.
+#' @param x1 Array of \mjsdeqn{r \times c \times n_1}, samples from group 1.
+#' @param x2 Array of \mjsdeqn{r \times c \times n_2}, samples from group 2.
 #' @param r0,c0 Row and column size of blocks. See details.
 #' @param blockList List including the index set of pre-specified blocks. See details.
-#' @param blockMode How the differential structure of \mjeqn{M_1 - M_2}{M1-M2} are 
+#' @param blockMode How the differential structure of \mjsdeqn{M_1 - M_2} are 
 #' detected. The default (`blockMode=NULL`) does NOT detect the structure of feature 
 #' blocks. If `blockMode="fd"`(or `"forward"`), a forward stepwise procedure is 
 #' conducted to detect the nonzero positions of feature blocks, wherein BIC serves 
 #' as the stopping rule.
 #' @param permNum Round of permutation.
-#' @param alpha The upper-\mjeqn{\alpha}{alpha} quantile of the permutation statistic. 
+#' @param alpha The upper-\mjsdeqn{\alpha} quantile of the permutation statistic. 
 #' 
 #' @details 
 #' There are two ways to specify the blocks under consideration. In the case that 
@@ -56,11 +56,10 @@
 #' predict(plfd.model, xtest, ytest)
 #' 
 #' @references 
-#' Z. Xu, S. Luo and Z. Chen. (2021). A Portmanteau Local Feature Discrimination
+#' Xu Z., Luo S. and Chen Z. (2021). A Portmanteau Local Feature Discrimination
 #'  Approach to the Classification with High-dimensional Matrix-variate Data. Sankhya A.
 #'  \doi{10.1007/s13171-021-00255-2}
 #' 
-#' @importFrom stats quantile predict
 #' @export 
 plfd <- function(x1, x2, r0, c0, blockList, blockMode=NULL, permNum=100, alpha=0.0) {
     stopifnot(NROW(x1) == NROW(x2))

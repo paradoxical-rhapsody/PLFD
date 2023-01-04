@@ -1,6 +1,6 @@
 #' @title Identify Feature Blocks
 #' @description \loadmathjax
-#' Identify the blocks whose \mjeqn{T^2}{T^2}-statistic exceeds a
+#' Identify the blocks whose \mjsdeqn{T^2}-statistic exceeds a
 #'  threshold determined by permutation.
 #' 
 #' @param x1 See [plfd()].
@@ -11,6 +11,7 @@
 #' 
 #' @return List with each component including the index of rows and 
 #' columns of feature blocks.
+#' 
 #' @noRd
 get_feature_blocks <- function (x1, x2, blockList, permNum, alpha) {
     stopifnot(NROW(x2) == NROW(x1))

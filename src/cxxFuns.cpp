@@ -4,12 +4,13 @@ using namespace Rcpp;
 
 //' @title Log-Likelihood of Matrix-Variate Normal Data
 //' @description \loadmathjax
-//' Log-likelihood of i.i.d data from \mjeqn{N(0, \Psi, \Sigma)}{N(0, Psi, Sigma)}.
+//' Log-likelihood of i.i.d data from \mjsdeqn{N(0, \Psi, \Sigma)}.
 //'
 //' @param x Array.
 //' @param Psi,Sig Row and column convariance matrice.
 //'
 //' @return Log-likelihood value.
+//'
 //' @noRd
 double cxx_logLik(const arma::cube & x, const arma::mat & Psi, const arma::mat & Sig){
     unsigned int r0 = x.n_rows ;
@@ -33,16 +34,18 @@ double cxx_logLik(const arma::cube & x, const arma::mat & Psi, const arma::mat &
 }
 
 
+
 //' @title MLE of Row and Column Covariance Matrices
 //' @description \loadmathjax
 //' It supposes the data are sampled independently from
-//'   \mjeqn{N(0, \Psi, \Sigma)}{N(0, Psi, Sigma)}.
+//'   \mjsdeqn{N(0, \Psi, \Sigma)}.
 //'
 //' @param x Array.
 //' @param maxIter Maximal step of iterations.
 //' @param tol Tolerance.
 //'
 //' @return `list(Psi, PsiInv, Sig, SigInv, logLik)`.
+//'
 //' @noRd
 List cxx_mle(const arma::cube & x, unsigned int maxIter=100, double tol=1.0e-8){
     unsigned int r0 = x.n_rows ;
@@ -81,8 +84,9 @@ List cxx_mle(const arma::cube & x, unsigned int maxIter=100, double tol=1.0e-8){
         ::Named("logLik")=logLik
     ) ;
 }
- 
- 
+
+
+
 //' @title Mean Matrices
 //' @description
 //' If `isTRUE(flag(i, j))`, `M1(i, j)` and `M2(i, j)` are estimated as
@@ -93,6 +97,7 @@ List cxx_mle(const arma::cube & x, unsigned int maxIter=100, double tol=1.0e-8){
 //' @param flag Logical matrix returned from [get_suppSet()].
 //'
 //' @return `list(M1, M2)`.
+//'
 //' @noRd
 // [[Rcpp::export]]
 List cxx_mean(const arma::cube& x1, const arma::cube& x2, const LogicalMatrix& flag){
@@ -117,6 +122,8 @@ List cxx_mean(const arma::cube& x1, const arma::cube& x2, const LogicalMatrix& f
     return List::create(::Named("M1")=M1, ::Named("M2")=M2) ;
 }
 
+
+
 //' @title Center Data
 //'
 //' @param x1 See [get_suppSet()].
@@ -124,6 +131,7 @@ List cxx_mean(const arma::cube& x1, const arma::cube& x2, const LogicalMatrix& f
 //' @param flag The result returned from [get_suppSet()].
 //'
 //' @return Array.
+//'
 //' @noRd
 arma::cube cxx_center_data(const arma::cube & x1, const arma::cube & x2, const LogicalMatrix & flag){
     unsigned int r0 = x1.n_rows ;
@@ -146,6 +154,8 @@ arma::cube cxx_center_data(const arma::cube & x1, const arma::cube & x2, const L
     return dat ;
 }
 
+
+
 //' @title MLE of Row and Column Precision Matrices
 //'
 //' @param x1  See [get_suppSet()].
@@ -153,6 +163,7 @@ arma::cube cxx_center_data(const arma::cube & x1, const arma::cube & x2, const L
 //' @param flag Matrix returned from [get_suppSet()].
 //'
 //' @return See the value of [cxx_mle()].
+//'
 //' @noRd
 // [[Rcpp::export]]
 List cxx_prec (arma::cube x1, arma::cube x2, LogicalMatrix flag) {

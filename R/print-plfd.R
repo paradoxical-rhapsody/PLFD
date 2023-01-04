@@ -2,6 +2,7 @@
 #' 
 #' @param x `plfd` object.
 #' @param ... Ignored currently.
+#' 
 #' @export
 print.plfd <- function (x, ...) {
     message(sprintf('Dimension of Matrix-variate: %d x %d.', x$rDim, x$cDim))

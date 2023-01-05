@@ -12,9 +12,12 @@ get_paras <- function(x1, x2, blockList, blockMode) {
     for (i in seq(blockList)) {
         rIdx <- blockList[[i]][['rIdx']]
         cIdx <- blockList[[i]][['cIdx']]
-        temp <- get_discriminantPara(x1[rIdx, cIdx, , drop=F], x2[rIdx, cIdx, , drop=F], blockMode)
+        temp <- get_discriminantPara(
+                    x1[rIdx, cIdx, , drop=F], 
+                    x2[rIdx, cIdx, , drop=F], blockMode)
         blockList[[i]][['B']] <- temp[['B']]
         blockList[[i]][['M']] <- temp[['M']]
     }
+    
     return(blockList)
 }

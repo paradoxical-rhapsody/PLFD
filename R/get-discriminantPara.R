@@ -18,8 +18,9 @@ get_discriminantPara <- function (x1, x2, blockMode) {
     flag <- get_suppSet(x1, x2, blockMode)       
     m <- cxx_mean(x1, x2, flag)
     p <- cxx_prec(x1, x2, flag)
-    B <- p[['PsiInv']] %*% (m[['M1']] - m[['M2']]) %*% p[['SigInv']]
-    M <- (m[['M1']] + m[['M2']]) / 2
     
-    list(M=M, B=B)
+    list(
+        M = (m$M1 + m$M2) / 2.0, 
+        B = p$PsiInv %*% (m$M1 - m$M2) %*% p$SigInv
+    )
 }

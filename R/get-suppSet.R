@@ -6,8 +6,8 @@
 #' @param x2 Array.
 #' @param blockMode See [plfd()].
 #' 
-#' @return Logical matrix, wherein the set of `FALSE` corresponds to 
-#'  \mjseqn{supp(M_1 - M_2)}.
+#' @return Logical matrix, wherein the set of `FALSE` indicates non-zero entries
+#'  in \mjseqn{supp(M_1 - M_2)}.
 #' 
 #' @noRd
 get_suppSet <- function (x1, x2, blockMode=NULL) {
@@ -18,43 +18,41 @@ get_suppSet <- function (x1, x2, blockMode=NULL) {
     stopifnot( NROW(x2) == rDim )
     stopifnot( NCOL(x2) == cDim )
 
-    if ( is.null(blockMode) ) {
+    if ( is.null(blockMode) )
         return( matrix(FALSE, rDim, cDim) )
-    } else {
-        stopifnot( blockMode %in% c("fd", "forward") )
-    }
 
+    stopifnot( blockMode == "forward" )
     flag <- matrix(TRUE, rDim, cDim)
     
     logL <- cxx_prec(x1, x2, flag)$logLik
-    df <- (rDim+cDim)*(rDim+cDim+1)/2
-    ebic <- ( -2*logL +  df * log(n0))
+    # df <- (rDim+cDim)*(rDim+cDim+1) / 2.0
+    ebic <- ( -2*logL +  sum(!flag) * log(n0) )
 
     k <- 0
-    candidates <- seq(rDim*cDim)
-    while (length(candidates)) {
-        temp <- rep(NA, length(candidates))
-        for (i in 1:length(candidates)) {
-            flag[candidates[i]] <- FALSE
-            temp[i] <- cxx_prec(x1, x2, flag)$logLik
-            flag[candidates[i]] <- TRUE
+    i0 <- NA
+    while (any(flag)) {
+        candidates <- which(flag)
+        for (iC in candidates) {
+            flag[iC] <- FALSE
+            templogLik <- cxx_prec(x1, x2, flag)$logLik
+            flag[iC] <- TRUE
+
+            if (templogLik > logL) {
+                logL <- templogLik
+                i0 <- iC
+            }
         }
         
-        i0 <- candidates[which.max(temp)]
         flag[i0] <- FALSE
-        logL <- cxx_prec(x1, x2, flag)$logLik
-        df <- df + 1
-        tmp <- -2*logL + df*log(n0) # + (2*ebic.gamma*lchoose(rDim*cDim, k))
-        
-        k <- k + 1
-        if (tmp > ebic) {
-            # flag[i0] <- TRUE
+        tmpebic <- -2*logL + sum(!flag)*log(n0) # + (2*ebic.gamma*lchoose(rDim*cDim, k))
+        if (tmpebic > ebic) {
+            if (length(candidates) < rDim*cDim) # avoid full `TRUE`
+                flag[i0] <- TRUE
             break
         }
         
-        candidates <- setdiff(candidates, i0)
-        ebic <- tmp
+        ebic <- tmpebic
     }
 
-    flag
+    return(flag)
 }

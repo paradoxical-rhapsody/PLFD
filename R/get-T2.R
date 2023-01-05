@@ -28,7 +28,8 @@ get_T2 <- function (x1, x2) {
     dim(M.diff) <- c(r0, c0)
     p <- cxx_prec(x1, x2, matrix(FALSE, r0, c0))
 
-    # T2 = (n1*n2/n) tr[(M1 - M2)' Sig.inv (M1 - M2) Psi.inv]
-    T2 <- (n1*n2/n) * sum(crossprod(p$PsiInv, M.diff) * tcrossprod(M.diff, p$SigInv))
-    (n-r0*c0-3)/(r0*c0*(n-2)) * T2 - 1.0
+    # T2 = (n1*n2/n) tr[PsiInv (M1 - M2) SigInv (M1 - M2)']
+    T2 <- (n1*n2/n) * sum( (p$PsiInv %*% M.diff) * (M.diff %*% p$SigInv) )
+
+    return( (n-r0*c0-3)/(r0*c0*(n-2)) * T2 - 1.0 )
 }

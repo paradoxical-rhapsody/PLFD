@@ -1,6 +1,6 @@
 #' @title Identify Feature Blocks
 #' @description \loadmathjax
-#' Identify the blocks whose \mjsdeqn{T^2}-statistic exceeds a
+#' Identify the blocks whose \mjseqn{T^2}-statistic exceeds a
 #'  threshold determined by permutation.
 #' 
 #' @param x1 See [plfd()].

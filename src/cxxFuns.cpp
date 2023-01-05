@@ -4,41 +4,45 @@ using namespace Rcpp;
 
 //' @title Log-Likelihood of Matrix-Variate Normal Data
 //' @description \loadmathjax
-//' Log-likelihood of i.i.d data from \mjsdeqn{N(0, \Psi, \Sigma)}.
+//' Log-likelihood of i.i.d data from 
+//' \mjseqn{N_{r \ times c}(0, \Psi, \Sigma)}, i.e.
+//' \mjsdeqn{ logLik = (-0.5) 
+//'     \Big( nrc \log(2\pi) + nc \log |\Psi| + nr \log |\Sigma| + 
+//'         \sum_{i=1}^n \| \Psi^{-1/2} (X_i - M) \Sigma^{-1/2} \|_F^2 \Big) .}
 //'
 //' @param x Array.
-//' @param Psi,Sig Row and column convariance matrice.
+//' @param PsiInv Row precision matrix, i.e., \mjseqn{\Psi^{-1}}.
+//' @param SigInv Column precision matrix, i.e., \mjseqn{\Sigma^{-1}}.
 //'
 //' @return Log-likelihood value.
 //'
 //' @noRd
-double cxx_logLik(const arma::cube & x, const arma::mat & Psi, const arma::mat & Sig){
+double cxx_logLik(const arma::cube & x, const arma::mat & PsiInv, const arma::mat & SigInv){
     unsigned int r0 = x.n_rows ;
     unsigned int c0 = x.n_cols ;
     unsigned int n0 = x.n_slices ;
 
     // `arma::inv_sympd(A)` throws warning if A is asymmetric
-    arma::mat PsiInv = arma::inv_sympd(Psi) ;
-    arma::mat SigInv = arma::inv_sympd(Sig) ;
+    // arma::mat PsiInv = arma::inv_sympd(Psi) ;
+    // arma::mat SigInv = arma::inv_sympd(Sig) ;
 
-    double logTr = 0.0 ;
+    double log_2pi = log(2*arma::datum::pi) ;
+    double logdet_psiinv = arma::log_det_sympd(Psiinv) ;
+    double logdet_siginv = arma::log_det_sympd(Siginv) ;
+
+    double egg = n0 * (r0*c0*log_2pi - c0*logdet_psiinv - r0*logdet_siginv) ;
     for (unsigned int i=0; i < n0; i++)
-        logTr += arma::accu( (PsiInv*x.slice(i)) % (x.slice(i)*SigInv) ) ;
+        egg += arma::accu( (PsiInv*x.slice(i)) % (x.slice(i)*SigInv) ) ;
 
-    // `arma::log_det(val, sign, A)` leads to `|A| = exp(val)*sign`
-    double d1, d2, temp ;
-    arma::log_det(d1, temp, Psi) ;
-    arma::log_det(d2, temp, Sig) ;
-
-    return -0.5*(n0*r0*c0*log(2*M_PI) + n0*c0*d1 + n0*r0*d2 + logTr) ;
+    return (-0.5) * egg ;
 }
 
 
 
-//' @title MLE of Row and Column Covariance Matrices
+//' @title MLE of \mjseqn{\Psi} and \mjseqn{\Sigma}
 //' @description \loadmathjax
 //' It supposes the data are sampled independently from
-//'   \mjsdeqn{N(0, \Psi, \Sigma)}.
+//'   \mjseqn{N(0, \Psi, \Sigma)}.
 //'
 //' @param x Array.
 //' @param maxIter Maximal step of iterations.
@@ -47,7 +51,7 @@ double cxx_logLik(const arma::cube & x, const arma::mat & Psi, const arma::mat &
 //' @return `list(Psi, PsiInv, Sig, SigInv, logLik)`.
 //'
 //' @noRd
-List cxx_mle(const arma::cube & x, unsigned int maxIter=100, double tol=1.0e-8){
+List cxx_mle(const arma::cube & x, unsigned int maxIter=100, double tol=1.0e-6){
     unsigned int r0 = x.n_rows ;
     unsigned int c0 = x.n_cols ;
     unsigned int n0 = x.n_slices ;
@@ -55,7 +59,7 @@ List cxx_mle(const arma::cube & x, unsigned int maxIter=100, double tol=1.0e-8){
     arma::mat Psi = arma::eye(r0, r0), PsiInv = arma::eye(r0, r0) ;
     arma::mat Sig = arma::eye(c0, c0), SigInv = arma::eye(c0, c0) ;
 
-    double logLik = cxx_logLik(x, Psi, Sig) ;
+    double logLik = cxx_logLik(x, PsiInv, SigInv) ;
     double logLikOld = logLik ;
     double err = tol + 1.0 ;
     unsigned int i=0, k=0 ;
@@ -73,7 +77,7 @@ List cxx_mle(const arma::cube & x, unsigned int maxIter=100, double tol=1.0e-8){
         SigInv = arma::inv_sympd(Sig) ;
 
         logLikOld = logLik ;
-        logLik = cxx_logLik(x, Psi, Sig) ;
+        logLik = cxx_logLik(x, PsiInv, SigInv) ;
         err = fabs(logLik - logLikOld) ;
         k++ ;
     }
@@ -100,22 +104,23 @@ List cxx_mle(const arma::cube & x, unsigned int maxIter=100, double tol=1.0e-8){
 //'
 //' @noRd
 // [[Rcpp::export]]
-List cxx_mean(const arma::cube& x1, const arma::cube& x2, const LogicalMatrix& flag){
+List cxx_mean(const arma::cube & x1, const arma::cube & x2, const LogicalMatrix & flag){
     unsigned int r0 = x1.n_rows ;
     unsigned int c0 = x1.n_cols ;
     double n1 = x1.n_slices ;
     double n2 = x2.n_slices ;
-    double pi01 = n1/(n1+n2) ;
-    double pi02 = n2/(n1+n2) ;
+    double pi01 = n1 / (double)(n1+n2) ;
+    double pi02 = n2 / (double)(n1+n2) ;
 
     unsigned int iRow=0, iCol=0 ;
-    arma::mat mu1=mean(x1, 2), M1=mu1 ;
-    arma::mat mu2=mean(x2, 2), M2=mu2 ;
-
+    arma::mat M1 = mean(x1, 2) ;
+    arma::mat M2 = mean(x2, 2) ;
+    double tmp = 0.0 ; 
     for (iRow=0; iRow < r0; iRow++) { for (iCol=0; iCol < c0; iCol++) {
         if (flag(iRow, iCol)) {
-            M1(iRow, iCol) = pi01*mu1(iRow, iCol) + pi02*mu2(iRow, iCol) ;
-            M2(iRow, iCol) = pi01*mu1(iRow, iCol) + pi02*mu2(iRow, iCol) ;
+            tmp = pi01 * M1(iRow, iCol) + pi02 * M2(iRow, iCol) ; 
+            M1(iRow, iCol) = tmp ;
+            M2(iRow, iCol) = tmp ;
         }
     }}
 

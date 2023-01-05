@@ -1,4 +1,4 @@
-#' @title \mjsdeqn{T^2}-Statistic
+#' @title \mjseqn{T^2}-Statistic
 #' @description \loadmathjax
 #' 
 #' @param x1 See [get_suppSet()].
@@ -12,7 +12,7 @@
 #' column size so that the estimated row and column covariance matrices 
 #' are non-singular.
 #' 
-#' @return \mjsdeqn{T^2}-statistic.
+#' @return \mjseqn{T^2}-statistic.
 #' 
 #' @noRd
 get_T2 <- function (x1, x2) {

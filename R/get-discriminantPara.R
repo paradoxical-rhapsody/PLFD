@@ -6,9 +6,9 @@
 #' @param x2 See [get_suppSet()].
 #' @param blockMode See [plfd()].
 #' 
-#' @return `list(M, B)`, wherein \mjsdeqn{M = (M_1 + M_2)/2}
-#' and \mjsdeqn{B = Psi^{-1} (M_1 - M_2) Sigma^{-1}} are 
-#' the parameters in \mjsdeqn{W(X) = tr((X-M)^\top B)}.
+#' @return `list(M, B)`, wherein \mjseqn{M = (M_1 + M_2)/2}
+#' and \mjseqn{B = Psi^{-1} (M_1 - M_2) Sigma^{-1}} are 
+#' the parameters in \mjseqn{W(X) = tr((X-M)^\top B)}.
 #' 
 #' @noRd
 get_discriminantPara <- function (x1, x2, blockMode) {

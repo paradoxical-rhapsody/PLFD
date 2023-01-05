@@ -3,17 +3,17 @@
 #' A portmanteau local feature discrimination (PLFD) approach to the classification with
 #' high-dimensional matrix-variate data.
 #' 
-#' @param x1 Array of \mjsdeqn{r \times c \times n_1}, samples from group 1.
-#' @param x2 Array of \mjsdeqn{r \times c \times n_2}, samples from group 2.
+#' @param x1 Array of \mjseqn{r \times c \times n_1}, samples from group 1.
+#' @param x2 Array of \mjseqn{r \times c \times n_2}, samples from group 2.
 #' @param r0,c0 Row and column size of blocks. See details.
 #' @param blockList List including the index set of pre-specified blocks. See details.
-#' @param blockMode How the differential structure of \mjsdeqn{M_1 - M_2} are 
+#' @param blockMode How the differential structure of \mjseqn{M_1 - M_2} are 
 #' detected. The default (`blockMode=NULL`) does NOT detect the structure of feature 
 #' blocks. If `blockMode="fd"`(or `"forward"`), a forward stepwise procedure is 
 #' conducted to detect the nonzero positions of feature blocks, wherein BIC serves 
 #' as the stopping rule.
 #' @param permNum Round of permutation.
-#' @param alpha The upper-\mjsdeqn{\alpha} quantile of the permutation statistic. 
+#' @param alpha The upper-\mjseqn{\alpha} quantile of the permutation statistic. 
 #' 
 #' @details 
 #' There are two ways to specify the blocks under consideration. In the case that 

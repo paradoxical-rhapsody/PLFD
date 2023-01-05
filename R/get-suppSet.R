@@ -1,13 +1,13 @@
 #' @title Detect Differential Structure
 #' @description \loadmathjax
-#' Identify \mjsdeqn{supp(M_1 - M_2)}.
+#' Identify \mjseqn{supp(M_1 - M_2)}.
 #' 
 #' @param x1 Array.
 #' @param x2 Array.
 #' @param blockMode See [plfd()].
 #' 
 #' @return Logical matrix, wherein the set of `FALSE` corresponds to 
-#'  \mjsdeqn{supp(M_1 - M_2)}.
+#'  \mjseqn{supp(M_1 - M_2)}.
 #' 
 #' @noRd
 get_suppSet <- function (x1, x2, blockMode=NULL) {

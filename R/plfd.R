@@ -3,8 +3,8 @@
 #' A portmanteau local feature discrimination (PLFD) approach to the classification with
 #' high-dimensional matrix-variate data.
 #' 
-#' @param x1 Array of \mjseqn{r \times c \times n_1}, samples from group 1.
-#' @param x2 Array of \mjseqn{r \times c \times n_2}, samples from group 2.
+#' @param x Array of \mjseqn{r \times c \times n}.
+#' @param y Vector of length-\mjseqn{n} with values 1 or 2.
 #' @param r0,c0 Row and column size of blocks. See details.
 #' @param blockList List including the index set of pre-specified blocks. See details.
 #' @param blockMode How the differential structure of \mjseqn{M_1 - M_2} are 
@@ -12,8 +12,8 @@
 #' blocks. If `blockMode="fd"`(or `"forward"`), a forward stepwise procedure is 
 #' conducted to detect the nonzero positions of feature blocks, wherein BIC serves 
 #' as the stopping rule.
-#' @param permNum Round of permutation.
-#' @param alpha The upper-\mjseqn{\alpha} quantile of the permutation statistic. 
+#' @param permNum Rounds of permutation.
+#' @param alpha The **upper**-\mjseqn{\alpha} quantile of the permutation statistic. 
 #' 
 #' @details 
 #' There are two ways to specify the blocks under consideration. In the case that 
@@ -23,34 +23,35 @@
 #' which each element includes `rIdx` and `cIdx` corresponding to the row and column index 
 #' set of a block. See examples.
 #' 
-#' @return List, \itemize{
-#'  \item `n1`, `n2`, `rDim`, `cDim`, `blockMode`, `permNum`, `alpha`;
-#'  \item `blockNumber`: the number of identified feature blocks.
-#'  \item `paras`: `list(list(rIdx, cIdx, B, M), ...)`, list of the information of 
+#' @return List.
+#'  * `n1`, `n2`, `rDim`, `cDim`, `blockMode`, `permNum`, `alpha`;
+#'  * `blockNumber`: the number of identified feature blocks.
+#'  * `paras`: `list(list(rIdx, cIdx, B, M), ...)`, list of the information of 
 #'  feature blocks.
-#' }
 #' 
 #' @examples
-#' set.seed(2020)
+#' set.seed(2023)
 #' rDim <- 20
 #' cDim <- 20
 #' 
-#' n1 <- n2 <- 50
-#' x1 <- array(rnorm(rDim*cDim*n1, mean=0.0), dim=c(rDim, cDim, n1))
-#' x2 <- array(rnorm(rDim*cDim*n2, mean=1.0), dim=c(rDim, cDim, n2))
+#' n <- 100
+#' y <- sample(1:2, n, TRUE, c(0.5, 0.5))
+#' x <- array(rnorm(rDim*cDim*n), dim=c(rDim, cDim, n))
+#' x[, , y==2] <- (x[, , y==2] + 1.0)
 #'
-#' ntest <- 50
-#' xtest <- array(rnorm(rDim*cDim*ntest, mean=1.0), dim=c(rDim, cDim, ntest))
-#' ytest <- rep(2, ntest)
+#' ntest <- 200
+#' ytest <- sample(1:2, ntest, TRUE, c(0.5, 0.5))
+#' xtest <- array(rnorm(rDim*cDim*ntest), dim=c(rDim, cDim, ntest))
+#' xtest[, , ytest==2] <- (xtest[, , ytest==2] + 1.0)
 #' 
 #' ## Uniform partition
-#' print( plfd(x1, x2, r0=5, c0=5) )
+#' print( plfd(x, y, r0=5, c0=5) )
 #' 
 #' ## Pre-specify feature blocks
 #' blockList <- list(list(rIdx=1:5, cIdx=1:5), 
 #'                   list(rIdx=6:10, cIdx=1:5), 
 #'                   list(rIdx=3:9, cIdx=2:8))
-#' print( plfd.model <- plfd(x1, x2, blockList=blockList) )
+#' print( plfd.model <- plfd(x, y, blockList=blockList) )
 #' 
 #' ## Predict
 #' predict(plfd.model, xtest, ytest)
@@ -61,24 +62,25 @@
 #'  \doi{10.1007/s13171-021-00255-2}
 #' 
 #' @export 
-plfd <- function(x1, x2, r0, c0, blockList, blockMode=NULL, permNum=100, alpha=0.0) {
-    stopifnot(NROW(x1) == NROW(x2))
-    stopifnot(NCOL(x1) == NCOL(x2))
-    rDim <- NROW(x1)
-    cDim <- NCOL(x1)
-    n1 <- dim(x1)[3]
-    n2 <- dim(x2)[3]
-    n  <- n1 + n2
+plfd <- function(x, y, r0, c0, blockList, blockMode=NULL, permNum=100, alpha=0.0) {
+    rDim <- NROW(x)
+    cDim <- NCOL(x)
+    n  <- dim(x)[3]
+    n1 <- sum( y == 1 )
+    n2 <- sum( y == 2 )
+    stopifnot( y %in% 1:2 )
+    stopifnot( n == length(y) )
+
     plfd.model <- list(n1=n1, n2=n2, rDim=rDim, cDim=cDim, 
                     blockMode=blockMode, permNum=permNum, alpha=alpha)
     class(plfd.model) <- 'plfd'
     
-    if (missing(blockList)) blockList <- size2blocks(rDim, cDim, r0, c0)
+    if (missing(blockList)) 
+        blockList <- size2blocks(rDim, cDim, r0, c0)
+    
     plfd.model[['BlockNumber']] <- length(blockList)
-
-    featureBlocks <- get_feature_blocks(x1, x2, blockList, permNum, alpha)
-    paras <- get_paras(x1, x2, featureBlocks, blockMode)
-    plfd.model[['paras']] <- paras
+    featureBlocks <- get_feature_blocks(x, y, blockList, permNum, alpha)
+    plfd.model[['paras']] <- get_paras(x, y, featureBlocks, blockMode)
     
     return(plfd.model)
 }

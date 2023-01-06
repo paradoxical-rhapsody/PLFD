@@ -16,7 +16,8 @@
 \item{...}{Ignored currently.}
 }
 \value{
-\code{list(W, y.hat, mcr)}, \itemize{
+\code{list(W, y.hat, mcr)} with
+\itemize{
 \item \code{W}: discriminant scores;
 \item \code{y.hat}: predicted labels;
 \item \code{mcr}: misclassification rate if parameter \code{y} is available.

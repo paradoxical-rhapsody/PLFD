@@ -2,8 +2,8 @@
 #' @description \loadmathjax
 #' Coefficient matrix and the averaged mean matrix.
 #' 
-#' @param x1 See [get_suppSet()].
-#' @param x2 See [get_suppSet()].
+#' @param x See [get_suppSet()].
+#' @param y See [get_suppSet()].
 #' @param blockMode See [plfd()].
 #' 
 #' @return `list(M, B)`, wherein \mjseqn{M = (M_1 + M_2)/2}
@@ -11,13 +11,16 @@
 #' the parameters in \mjseqn{W(X) = tr((X-M)^\top B)}.
 #' 
 #' @noRd
-get_discriminantPara <- function (x1, x2, blockMode) {
-    stopifnot(NROW(x1) == NROW(x2))
-    stopifnot(NCOL(x1) == NCOL(x2))
+get_discriminantPara <- function (x, y, blockMode) {
+    stopifnot( length(dim(x)) == 3 )
+    stopifnot( length(y) == dim(x)[3] )
+    stopifnot( y %in% 1:2 )
     
-    flag <- get_suppSet(x1, x2, blockMode)       
-    m <- cxx_mean(x1, x2, flag)
-    p <- cxx_prec(x1, x2, flag)
+    flag <- get_suppSet(x, y, blockMode)       
+    m <- cxx_mean(x[, , y==1, drop=F], 
+                x[, , y==2, drop=F], flag)
+    p <- cxx_prec(x[, , y==1, drop=F], 
+                x[, , y==2, drop=F], flag)
     
     list(
         M = (m$M1 + m$M2) / 2.0, 

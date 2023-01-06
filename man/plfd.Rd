@@ -4,29 +4,30 @@
 \alias{plfd}
 \title{PLFD}
 \usage{
-plfd(x1, x2, r0, c0, blockList, blockMode = NULL, permNum = 100, alpha = 0)
+plfd(x, y, r0, c0, blockList, blockMode = NULL, permNum = 100, alpha = 0)
 }
 \arguments{
-\item{x1}{Array of \mjeqn{r \times c \times n_1}{r\emph{c}n1}, samples from group 1.}
+\item{x}{Array of \mjseqn{r \times c \times n}.}
 
-\item{x2}{Array of \mjeqn{r \times c \times n_2}{r\emph{c}n2}, samples from group 2.}
+\item{y}{Vector of length-\mjseqn{n} with values 1 or 2.}
 
 \item{r0, c0}{Row and column size of blocks. See details.}
 
 \item{blockList}{List including the index set of pre-specified blocks. See details.}
 
-\item{blockMode}{How the differential structure of \mjeqn{M_1 - M_2}{M1-M2} are
+\item{blockMode}{How the differential structure of \mjseqn{M_1 - M_2} are
 detected. The default (\code{blockMode=NULL}) does NOT detect the structure of feature
 blocks. If \code{blockMode="fd"}(or \code{"forward"}), a forward stepwise procedure is
 conducted to detect the nonzero positions of feature blocks, wherein BIC serves
 as the stopping rule.}
 
-\item{permNum}{Round of permutation.}
+\item{permNum}{Rounds of permutation.}
 
-\item{alpha}{The upper-\mjeqn{\alpha}{alpha} quantile of the permutation statistic.}
+\item{alpha}{The \strong{upper}-\mjseqn{\alpha} quantile of the permutation statistic.}
 }
 \value{
-List, \itemize{
+List.
+\itemize{
 \item \code{n1}, \code{n2}, \code{rDim}, \code{cDim}, \code{blockMode}, \code{permNum}, \code{alpha};
 \item \code{blockNumber}: the number of identified feature blocks.
 \item \code{paras}: \code{list(list(rIdx, cIdx, B, M), ...)}, list of the information of
@@ -47,33 +48,35 @@ which each element includes \code{rIdx} and \code{cIdx} corresponding to the row
 set of a block. See examples.
 }
 \examples{
-set.seed(2020)
+set.seed(2023)
 rDim <- 20
 cDim <- 20
 
-n1 <- n2 <- 50
-x1 <- array(rnorm(rDim*cDim*n1, mean=0.0), dim=c(rDim, cDim, n1))
-x2 <- array(rnorm(rDim*cDim*n2, mean=1.0), dim=c(rDim, cDim, n2))
+n <- 100
+y <- sample(1:2, n, TRUE, c(0.5, 0.5))
+x <- array(rnorm(rDim*cDim*n), dim=c(rDim, cDim, n))
+x[, , y==2] <- (x[, , y==2] + 1.0)
 
-ntest <- 50
-xtest <- array(rnorm(rDim*cDim*ntest, mean=1.0), dim=c(rDim, cDim, ntest))
-ytest <- rep(2, ntest)
+ntest <- 200
+ytest <- sample(1:2, ntest, TRUE, c(0.5, 0.5))
+xtest <- array(rnorm(rDim*cDim*ntest), dim=c(rDim, cDim, ntest))
+xtest[, , ytest==2] <- (xtest[, , ytest==2] + 1.0)
 
 ## Uniform partition
-print( plfd(x1, x2, r0=5, c0=5) )
+print( plfd(x, y, r0=5, c0=5) )
 
 ## Pre-specify feature blocks
 blockList <- list(list(rIdx=1:5, cIdx=1:5), 
                   list(rIdx=6:10, cIdx=1:5), 
                   list(rIdx=3:9, cIdx=2:8))
-print( plfd.model <- plfd(x1, x2, blockList=blockList) )
+print( plfd.model <- plfd(x, y, blockList=blockList) )
 
 ## Predict
 predict(plfd.model, xtest, ytest)
 
 }
 \references{
-Z. Xu, S. Luo and Z. Chen. (2021). A Portmanteau Local Feature Discrimination
+Xu Z., Luo S. and Chen Z. (2021). A Portmanteau Local Feature Discrimination
 Approach to the Classification with High-dimensional Matrix-variate Data. Sankhya A.
 \doi{10.1007/s13171-021-00255-2}
 }

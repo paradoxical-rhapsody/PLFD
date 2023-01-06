@@ -3,27 +3,32 @@
 
 #' @title Log-Likelihood of Matrix-Variate Normal Data
 #' @description \loadmathjax
-#' It supposes that the data are independently from
-#'   \mjeqn{N(0, \Psi, \Sigma)}{`N(0, Psi, Sigma)`}.
+#' Log-likelihood of i.i.d data from 
+#' \mjseqn{N_{r \ times c}(0, \Psi, \Sigma)}, i.e.
+#' \mjsdeqn{ logLik = (-0.5) 
+#'     \Big( nrc \log(2\pi) + nc \log |\Psi| + nr \log |\Sigma| + 
+#'         \sum_{i=1}^n \| \Psi^{-1/2} (X_i - M) \Sigma^{-1/2} \|_F^2 \Big) .}
 #'
 #' @param x Array.
-#' @param Psi Row convariance matrix.
-#' @param Sig Column covariance matrix.
+#' @param PsiInv Row precision matrix, i.e., \mjseqn{\Psi^{-1}}.
+#' @param SigInv Column precision matrix, i.e., \mjseqn{\Sigma^{-1}}.
 #'
 #' @return Log-likelihood value.
+#'
 #' @noRd
 NULL
 
-#' @title MLE of Row and Column Covariance Matrices
+#' @title MLE of \mjseqn{\Psi} and \mjseqn{\Sigma}
 #' @description \loadmathjax
-#' It supposes that the data are independently from
-#'   \mjeqn{N(0, \Psi, \Sigma)}{`N(0, Psi, Sigma)`}.
+#' It supposes the data are sampled independently from
+#'   \mjseqn{N(0, \Psi, \Sigma)}.
 #'
 #' @param x Array.
-#' @param maxIter The maximal step of iterations.
+#' @param maxIter Maximal step of iterations.
 #' @param tol Tolerance.
 #'
-#' @return `list(logLik, Psi, PsiInv, Sig, SigInv)`.
+#' @return `list(Psi, PsiInv, Sig, SigInv, logLik)`.
+#'
 #' @noRd
 NULL
 
@@ -34,6 +39,7 @@ NULL
 #' @param flag The result returned from [get_suppSet()].
 #'
 #' @return Array.
+#'
 #' @noRd
 NULL
 
@@ -47,6 +53,7 @@ NULL
 #' @param flag Logical matrix returned from [get_suppSet()].
 #'
 #' @return `list(M1, M2)`.
+#'
 #' @noRd
 cxx_mean <- function(x1, x2, flag) {
     .Call(`_PLFD_cxx_mean`, x1, x2, flag)
@@ -59,6 +66,7 @@ cxx_mean <- function(x1, x2, flag) {
 #' @param flag Matrix returned from [get_suppSet()].
 #'
 #' @return See the value of [cxx_mle()].
+#'
 #' @noRd
 cxx_prec <- function(x1, x2, flag) {
     .Call(`_PLFD_cxx_prec`, x1, x2, flag)

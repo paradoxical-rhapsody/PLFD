@@ -1,8 +1,8 @@
 #' @title \mjseqn{T^2}-Statistic
 #' @description \loadmathjax
 #' 
-#' @param x1 See [get_suppSet()].
-#' @param x2 See [get_suppSet()].
+#' @param x See [get_suppSet()].
+#' @param y See [get_suppSet()].
 #' 
 #' @details 
 #' \mjsdeqn{T^2 = \frac{n_1 n_2}{n} tr [(\hat{M_1} - \hat{M_2})^\top 
@@ -15,18 +15,21 @@
 #' @return \mjseqn{T^2}-statistic.
 #' 
 #' @noRd
-get_T2 <- function (x1, x2) {
-    stopifnot(NROW(x2) == NROW(x1))
-    stopifnot(NCOL(x2) == NCOL(x1))
-    r0 <- NROW(x1)
-    c0 <- NCOL(x1)
-    n1 <- dim(x1)[3]
-    n2 <- dim(x2)[3]
-    n  <- n1 + n2
+get_T2 <- function (x, y) {
+    r0 <- NROW(x)
+    c0 <- NCOL(x)
+    n  <- dim(x)[3]
+    n1 <- sum(y==1)
+    n2 <- sum(y==2)
+    stopifnot( n == length(y) )
 
-    M.diff <- apply(x1, 1:2, mean) - apply(x2, 1:2, mean)
-    dim(M.diff) <- c(r0, c0)
-    p <- cxx_prec(x1, x2, matrix(FALSE, r0, c0))
+    M1 <- apply(x[, , y==1, drop=FALSE], 1:2, mean)
+    M2 <- apply(x[, , y==2, drop=FALSE], 1:2, mean)
+    M.diff <- M1 - M2
+    stopifnot( dim(M.diff) == c(r0, c0) )
+    p <- cxx_prec(x[, , y==1, drop=FALSE], 
+                x[, , y==2, drop=FALSE], 
+                matrix(FALSE, r0, c0))
 
     # T2 = (n1*n2/n) tr[PsiInv (M1 - M2) SigInv (M1 - M2)']
     T2 <- (n1*n2/n) * sum( (p$PsiInv %*% M.diff) * (M.diff %*% p$SigInv) )

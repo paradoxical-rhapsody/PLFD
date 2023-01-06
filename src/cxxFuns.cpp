@@ -27,8 +27,8 @@ double cxx_logLik(const arma::cube & x, const arma::mat & PsiInv, const arma::ma
     // arma::mat SigInv = arma::inv_sympd(Sig) ;
 
     double log_2pi = log(2*arma::datum::pi) ;
-    double logdet_psiinv = arma::log_det_sympd(Psiinv) ;
-    double logdet_siginv = arma::log_det_sympd(Siginv) ;
+    double logdet_psiinv = arma::log_det_sympd(PsiInv) ;
+    double logdet_siginv = arma::log_det_sympd(SigInv) ;
 
     double egg = n0 * (r0*c0*log_2pi - c0*logdet_psiinv - r0*logdet_siginv) ;
     for (unsigned int i=0; i < n0; i++)
@@ -51,7 +51,7 @@ double cxx_logLik(const arma::cube & x, const arma::mat & PsiInv, const arma::ma
 //' @return `list(Psi, PsiInv, Sig, SigInv, logLik)`.
 //'
 //' @noRd
-List cxx_mle(const arma::cube & x, unsigned int maxIter=100, double tol=1.0e-6){
+List cxx_mle(const arma::cube & x, unsigned int maxIter=200, double tol=1.0e-6){
     unsigned int r0 = x.n_rows ;
     unsigned int c0 = x.n_cols ;
     unsigned int n0 = x.n_slices ;

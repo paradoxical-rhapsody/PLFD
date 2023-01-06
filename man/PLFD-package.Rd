@@ -6,17 +6,13 @@
 \alias{PLFD-package}
 \title{PLFD: Portmanteau Local Feature Discrimination for Matrix-Variate Data}
 \description{
-The portmanteau local feature discriminant approach first identifies 
-    the local discriminant features and their differential structures, 
-    then constructs the discriminant rule by pooling the identified local
-    features together. This method is applicable to high-dimensional 
-    matrix-variate data.
+The portmanteau local feature discriminant approach first identifies the local discriminant features and their differential structures, then constructs the discriminant rule by pooling the identified local features together. This method is applicable to high-dimensional matrix-variate data. See the paper by Xu, Luo and Chen (2021, \doi{10/gmt2gd}).
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://gitee.com/xu-zc/PLFD}
-  \item Report bugs at \url{https://gitee.com/xu-zc/PLFD/issues}
+  \item \url{https://github.com/paradoxical-rhapsody/PLFD}
+  \item Report bugs at \url{https://github.com/paradoxical-rhapsody/PLFD/issues}
 }
 
 }

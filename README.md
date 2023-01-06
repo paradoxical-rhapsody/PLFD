@@ -34,4 +34,4 @@ vignette('usage', 'PLFD')
 
 ## Reference
 
-> Xu, Z., Luo S. and Chen Z. (2021). [A portmanteau local feature discrimination approach to the high-dimensional matrix-variate data.](https://dx.doi.org/10/gmt2gd)
+> Xu, Z., Luo S. and Chen Z. (2021). [A portmanteau local feature discrimination approach to the high-dimensional matrix-variate data.](https://dx.doi.org/10.1007/s13171-021-00255-2)

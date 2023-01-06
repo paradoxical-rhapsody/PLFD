@@ -13,7 +13,7 @@ Description:
     discriminant features and their differential structures, then constructs the 
     discriminant rule by pooling the identified local features together. This method 
     is applicable to high-dimensional matrix-variate data. 
-    See the paper by Xu, Luo and Chen (2021, <doi:10/gmt2gd>).
+    See the paper by Xu, Luo and Chen (2021, <doi:10.1007/s13171-021-00255-2>).
 Depends: R (>= 3.5.0)
 Imports: Rcpp (>= 1.0.2), mathjaxr
 LinkingTo: Rcpp (>= 1.0.2), RcppArmadillo (>= 0.9.800)

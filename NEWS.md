@@ -1,4 +1,4 @@
-2023-01-06 (v0.2.0)
+2023-01-10 (v0.2.0)
 ====================
 
 * performance improvement through avoiding repetitive estimation.

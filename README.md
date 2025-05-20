@@ -16,13 +16,14 @@
 install.packages("PLFD")
 ```
 
-<!-- 2022-12-28 
+<!-- 
 or
 
 ```
 library(remotes)
 install_git("https://github.com/paradoxical-rhapsody/PLFD.git")
 ```
+-->
 
 ## Usage
 
@@ -30,8 +31,7 @@ install_git("https://github.com/paradoxical-rhapsody/PLFD.git")
 library(PLFD)
 vignette('usage', 'PLFD')
 ```
--->
 
 ## Reference
 
-> Xu, Z., Luo S. and Chen Z. (2021). [A portmanteau local feature discrimination approach to the high-dimensional matrix-variate data.](https://dx.doi.org/10.1007/s13171-021-00255-2)
+> Xu, Z., Luo S. and Chen Z. (2023). [A portmanteau local feature discrimination approach to the high-dimensional matrix-variate data. Volume 85, pages 441–467](https://dx.doi.org/10.1007/s13171-021-00255-2)
